@@ -39,6 +39,6 @@ app = cdk.App()
 config = get_config()
 
 # Create dynamoDB stack
-BeerpongoDynamoDbStack(app, "BeerpongoDynamoDbStack", config)
+BeerpongoDynamoDbStack(app, config['dynamoDB']['stackName'], config)
 
 app.synth()
