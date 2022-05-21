@@ -1,0 +1,5 @@
+# prod configuration
+dynamoDB:
+  gamesTable:
+    id: 'BeerpongoProdGamesTable'
+    tableName: 'BeerpongoProdGamesTable'
