@@ -1,5 +1,6 @@
 # prod configuration
 dynamoDB:
+  stackName: 'BeerpongoDynamoDbStackProd'
   gamesTable:
     id: 'BeerpongoProdGamesTable'
     tableName: 'BeerpongoProdGamesTable'
