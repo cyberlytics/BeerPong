@@ -9,10 +9,10 @@ constructs = "<11.0.0,>=10.0.0"
 pyyaml = "*"
 
 [dev-packages]
-pytest = "==6.2.5"
 flake8 = "*"
 black = "*"
 isort = "*"
+pytest = "*"
 
 [requires]
 python_version = "3.10"
