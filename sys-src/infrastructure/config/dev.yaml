@@ -1,0 +1,6 @@
+# dev configuration
+dynamoDB:
+  stackName: 'BeerpongoDynamoDbStackDev'
+  gamesTable:
+    id: 'BeerpongoDevGamesTable'
+    tableName: 'BeerpongoDevGamesTable'
