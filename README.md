@@ -40,3 +40,7 @@ make deploy-infrastructure PROFILE=<deployment-profile> STACK=<stack_id> CONFIG=
 - `stack_id`: The id of the stack you want to deploy. For a deployment of all stacks use `--all`.
 
 
+Destroy deployed infrastructure stacks in AWS:
+```
+make destroy-infrastructure PROFILE=<deployment-profile> STACK=<stack_id> CONFIG=<env>
+```
