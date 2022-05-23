@@ -9,6 +9,12 @@ install-infrastructure:
 test-infrastructure: .install-dev-infrastructure
 	cd infrastructure && pipenv run pytest
 
+formatting-checks-infrastructure: .install-dev-infrastructure
+	cd infrastructure && pipenv run flake8 . && pipenv run black . --check && pipenv run isort . --check
+
+format-infrastructure: .install-dev-infrastructure
+	cd infrastructure && pipenv run black . && pipenv run isort .
+
 deploy-infrastructure: install-infrastructure test-infrastructure
 	cd infrastructure && cdk deploy -c config=$(CONFIG) --profile $(PROFILE) $(STACK)
 

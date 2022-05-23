@@ -10,6 +10,9 @@ pyyaml = "*"
 
 [dev-packages]
 pytest = "==6.2.5"
+flake8 = "*"
+black = "*"
+isort = "*"
 
 [requires]
 python_version = "3.10"

@@ -1,13 +1,8 @@
-import os
-import sys
-
 import pytest
 from aws_cdk import App
 from aws_cdk.assertions import Template
-from ..cdk.stacks.beerpongo_dynamo_db_stack import BeerpongoDynamoDbStack
 
-path = os.path.dirname(os.path.abspath(__file__))
-sys.path.insert(0, f"{path}/../..")
+from ..cdk.stacks.beerpongo_dynamo_db_stack import BeerpongoDynamoDbStack
 
 
 @pytest.fixture
@@ -19,17 +14,20 @@ def app():
 def mock_config():
     yield {
         "dynamoDB": {
+            "stackName": "BeerpongoDynamoDbStack",
             "gamesTable": {
-                "id": "BeerpongoDevGamesTable",
-                "tableName": "BeerpongoDevGamesTable"
-            }
+                "id": "BeerpongoGamesTable",
+                "tableName": "BeerpongoGamesTable",
+            },
         }
     }
 
 
 @pytest.fixture
 def dynamodb_stack(app, mock_config):
-    yield BeerpongoDynamoDbStack(app, construct_id="beerpong-app-dynamodb-stack", config=mock_config)
+    yield BeerpongoDynamoDbStack(
+        app, construct_id="BeerpongoDynamoDbStack", config=mock_config
+    )
 
 
 @pytest.fixture
@@ -37,7 +35,19 @@ def template(dynamodb_stack):
     yield Template.from_stack(dynamodb_stack)
 
 
-# Todo
-def test_dynamodb_user_tabel(template: Template):
-    # template.has_resource_properties("AWS::Dynamodb::Table", )
-    pass
+def test_beerpongo_dynamo_db_games_table(template: Template):
+    template.has_resource_properties(
+        "AWS::DynamoDB::Table",
+        {
+            "BillingMode": "PAY_PER_REQUEST",
+            "TableName": "BeerpongoGamesTable",
+            "AttributeDefinitions": [
+                {"AttributeName": "GameId", "AttributeType": "S"},
+                {"AttributeName": "StartTime", "AttributeType": "N"},
+            ],
+            "KeySchema": [
+                {"AttributeName": "GameId", "KeyType": "HASH"},
+                {"AttributeName": "StartTime", "KeyType": "RANGE"},
+            ],
+        },
+    )
