@@ -3,7 +3,6 @@ import logging
 
 import aws_cdk as cdk
 import yaml
-
 from stacks.beerpongo_dynamo_db_stack import BeerpongoDynamoDbStack
 
 _logger = logging.getLogger("app")
@@ -20,7 +19,7 @@ def get_config():
     try:
         env = app.node.try_get_context("config")
         with open(
-                file="./config/" + env + ".yaml", mode="r", encoding="utf8"
+            file="./config/" + env + ".yaml", mode="r", encoding="utf8"
         ) as stream:
             try:
                 c = yaml.safe_load(stream)
@@ -31,7 +30,8 @@ def get_config():
         return c
     except Exception as e:
         _logger.error(
-            f"""No or no valid config variable passed! '-c config={env}'\n {e}"""
+            f"""No or no valid config variable passed!
+             '-c config={env}'\n {e}"""
         )
 
 
@@ -39,6 +39,6 @@ app = cdk.App()
 config = get_config()
 
 # Create dynamoDB stack
-BeerpongoDynamoDbStack(app, config['dynamoDB']['stackName'], config)
+BeerpongoDynamoDbStack(app, config["dynamoDB"]["stackName"], config)
 
 app.synth()

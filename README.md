@@ -44,3 +44,13 @@ Destroy deployed infrastructure stacks in AWS:
 ```
 make destroy-infrastructure PROFILE=<deployment-profile> STACK=<stack_id> CONFIG=<env>
 ```
+
+## Formatting
+Run python formatting checks for infrastructure code:
+```
+make formatting-checks-infrastructure
+```
+Auto-format python infrastructure 
+```
+make format-infrastructure
+```
