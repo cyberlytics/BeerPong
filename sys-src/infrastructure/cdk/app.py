@@ -3,6 +3,7 @@ import logging
 
 import aws_cdk as cdk
 import yaml
+from stacks.beerpongo_api_gateway_stack import BeerpongoAPIGatewayStack
 from stacks.beerpongo_dynamo_db_stack import BeerpongoDynamoDbStack
 
 _logger = logging.getLogger("app")
@@ -41,4 +42,6 @@ config = get_config()
 # Create dynamoDB stack
 BeerpongoDynamoDbStack(app, config["dynamoDB"]["stackName"], config)
 
+# Create API-Gateway stack
+BeerpongoAPIGatewayStack(app, config["APIGateway"]["stackName"], config)
 app.synth()

@@ -21,7 +21,6 @@
         "description": "Creates a new game.",
         "operationId": "create game",
         "produces": [
-          "application/xml",
           "application/json"
         ],
         "responses": {
@@ -48,7 +47,6 @@
           "application/xml"
         ],
         "produces": [
-          "application/xml",
           "application/json"
         ],
         "parameters": [
@@ -83,8 +81,7 @@
         "summary": "Get an existing game",
         "description": "",
         "produces": [
-          "application/xml",
-          "applciation/json"
+          "application/json"
         ],
         "parameters": [
           {
@@ -122,9 +119,6 @@
           "type": "string",
           "description": "current state of the game in the form \"[ID]:[0-9, X],[ID]:[0-9, X],[ID]:[0-9, X],[ID]:[0-9, X],[ID]:[0-9, X];\""
         }
-      },
-      "xml": {
-        "name": "Room"
       }
     },
     "GameUpdate": {
@@ -144,9 +138,6 @@
           "type": "string",
           "description": "[0-9, X]"
         }
-      },
-      "xml": {
-        "name": "GameUpdate"
       }
     }
   }
