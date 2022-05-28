@@ -10,7 +10,7 @@ You can build the docker image with:
 
 and run your container on your local pc with:
 
-### `docker run -d -p 80:80 beerbongo-webapp:latest .` 
+### `docker run -d -p 80:80 beerbongo-webapp:latest` 
 
 Now you can access the site over the localhost.
 
