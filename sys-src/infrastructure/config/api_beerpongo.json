@@ -1,0 +1,153 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "API for Beerpongo",
+    "version": "0.0.1",
+    "title": "Beerpongo"
+  },
+  "tags": [
+    {
+      "name": "Game",
+      "description": "Operations for a game."
+    }
+  ],
+  "paths": {
+    "/game": {
+      "post": {
+        "tags": [
+          "Game"
+        ],
+        "summary": "Create a new game",
+        "description": "Creates a new game.",
+        "operationId": "create game",
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "New game created.",
+            "schema": {
+              "$ref": "#/definitions/Game"
+            }
+          },
+          "400": {
+            "description": "Error"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Game"
+        ],
+        "summary": "Update an existing game",
+        "description": "",
+        "operationId": "updatePet",
+        "consumes": [
+          "application/json",
+          "application/xml"
+        ],
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Game-object tha needs to be updated.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/GameUpdate"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Update ok"
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "Pet not found"
+          }
+        }
+      }
+    },
+    "/game/{gameId}": {
+      "get": {
+        "tags": [
+          "Game"
+        ],
+        "summary": "Get an existing game",
+        "description": "",
+        "produces": [
+          "application/xml",
+          "applciation/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "gameId",
+            "required": true,
+            "type": "integer",
+            "format": "int8"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Game found",
+            "schema": {
+              "$ref": "#/definitions/Game"
+            }
+          },
+          "404": {
+            "description": "Game not found"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Game": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int8",
+          "description": "id of the game"
+        },
+        "state": {
+          "type": "string",
+          "description": "current state of the game in the form \"[ID]:[0-9, X],[ID]:[0-9, X],[ID]:[0-9, X],[ID]:[0-9, X],[ID]:[0-9, X];\""
+        }
+      },
+      "xml": {
+        "name": "Room"
+      }
+    },
+    "GameUpdate": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int8",
+          "description": "id of the game"
+        },
+        "usrId": {
+          "type": "integer",
+          "format": "int8",
+          "description": "id of the user"
+        },
+        "state": {
+          "type": "string",
+          "description": "[0-9, X]"
+        }
+      },
+      "xml": {
+        "name": "GameUpdate"
+      }
+    }
+  }
+}
