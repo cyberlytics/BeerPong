@@ -2,6 +2,18 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Docker 
+
+You can build the docker image with:
+
+### `docker build -t beerpongo-webapp:latest .` (Don't forget the dot at the end)
+
+and run your container on your local pc with:
+
+### `docker run -d -p 80:80 beerbongo-webapp:latest .` 
+
+Now you can access the site over the localhost.
+
 ## Available Scripts
 
 In the project directory, you can run:
