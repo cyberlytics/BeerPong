@@ -1,15 +1,26 @@
 import json
+import boto3
 
 
-def lambda_handler(event, context):
-
-    http_method = event.get('httpMethod')
-    query_string = event.get('queryStringParameters')
-    headers = event.get('headers')
+    
+def put(event,context):
+    """
+    
+    """
     body = event.get('body')
+    id = body.get("id")
+    userID = body.get("usrID")
+    state = body.get("state")
 
-    return { 
-        'statusCode': 200,
-        'body': json.dumps('Hello from Lambda!')
-    }
+    client = boto3.client('dynamodb')
+
+    stateappend = f"{userID}:{state}"
+
+    response = client.get_item(
+        TableName='gamesTable',
+        Key={
+            "GameId":{"N": id}
+        },
+    )
+
     
