@@ -4,3 +4,8 @@ dynamoDB:
   gamesTable:
     id: 'BeerpongoDevGamesTable'
     tableName: 'BeerpongoDevGamesTable'
+
+APIGateway:
+  stackName: 'BeerpongoAPIGatewayStackDev'
+  apiFile: './config/api_beerpongo.json'
+  id: 'Beerpongo-api'
