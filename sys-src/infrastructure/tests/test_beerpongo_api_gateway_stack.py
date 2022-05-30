@@ -14,7 +14,7 @@ def app():
 def mock_config():
     yield {
         "APIGateway": {
-            "stackName": "BeerpongoAPIGatewayStackDev",
+            "stackName": "BeerpongoAPIGatewayStack",
             "apiFile": "./config/api_beerpongo.json",
             "id": "Beerpongo-api",
         }
@@ -23,8 +23,13 @@ def mock_config():
 
 @pytest.fixture
 def apigateway_stack(app, mock_config):
+    info = {"get_ARN": "get_ARN", "post_ARN": "post_ARN",
+            "put_ARN": "put_ARN",
+            "get_Credentials": "get_credentials", "post_Credentials":
+                "post_credentials", "put_Credentials": "put_credentials"}
     yield BeerpongoAPIGatewayStack(
-        app, construct_id="BeerpongoAPIGatewayStack", config=mock_config
+        app, construct_id="BeerpongoAPIGatewayStack", config=mock_config,
+        LambdaInfo=info
     )
 
 
@@ -34,12 +39,14 @@ def template(apigateway_stack):
 
 
 def test_beerpongo_api_gateway_stack(
-    app, apigateway_stack, template: Template
+        app, apigateway_stack, template: Template
 ):
     # In order to check the bucket for the api_beerpong.json file, we need
     # to create an asset and use here the values
-    asset: Asset
-    asset = apigateway_stack.api_asset
+    asset = Asset(apigateway_stack,
+                  "Api-Beerpong",
+                  path="./config/api_beerpongo_.json")
+
     bucketname = asset.s3_bucket_name
     name = apigateway_stack.resolve(bucketname)
     template.has_resource_properties(
