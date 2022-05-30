@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "description": "API for Beerpongo",
-    "version": "0.0.1",
+    "version": "0.1.0",
     "title": "Beerpongo"
   },
   "tags": [
@@ -33,6 +33,18 @@
           "400": {
             "description": "Error"
           }
+        },
+        "x-amazon-apigateway-integration": {
+          "httpMethod" : "POST",
+          "uri": "arn:aws:apigateway:eu-central-1:lambda:path/2015-03-31/functions/arn:aws:lambda:eu-central-1:016042176108:function:BeerpongoLambdaStackDev-lambdaDevpost0B9075AB-PsbU1JkOzfDK/invocations",
+          "responses" : {
+            "default" : {
+              "statusCode" : "200"
+            }
+          },
+          "passthroughBehavior" : "when_no_match",
+          "contentHandling" : "CONVERT_TO_TEXT",
+          "type" : "aws"
         }
       },
       "put": {
@@ -41,10 +53,9 @@
         ],
         "summary": "Update an existing game",
         "description": "",
-        "operationId": "updatePet",
+        "operationId": "updateGame",
         "consumes": [
-          "application/json",
-          "application/xml"
+          "application/json"
         ],
         "produces": [
           "application/json"
@@ -68,8 +79,20 @@
             "description": "Invalid ID supplied"
           },
           "404": {
-            "description": "Pet not found"
+            "description": "Game not found"
           }
+        },
+        "x-amazon-apigateway-integration": {
+          "httpMethod" : "POST",
+          "uri": "arn:aws:apigateway:eu-central-1:lambda:path/2015-03-31/functions/arn:aws:lambda:eu-central-1:016042176108:function:BeerpongoLambdaStackDev-lambdaDevput6F6E2F29-whKmRmdyuJRx/invocations",
+          "responses" : {
+            "default" : {
+              "statusCode" : "200"
+            }
+          },
+          "passthroughBehavior" : "when_no_match",
+          "contentHandling" : "CONVERT_TO_TEXT",
+          "type" : "aws"
         }
       }
     },
@@ -102,6 +125,18 @@
           "404": {
             "description": "Game not found"
           }
+        },
+        "x-amazon-apigateway-integration": {
+          "httpMethod" : "POST",
+          "uri": "arn:aws:apigateway:eu-central-1:lambda:path/2015-03-31/functions/arn:aws:lambda:eu-central-1:016042176108:function:BeerpongoLambdaStackDev-lambdaDevput6F6E2F29-whKmRmdyuJRx/invocations",
+          "responses" : {
+            "default" : {
+              "statusCode" : "200"
+            }
+          },
+          "passthroughBehavior" : "when_no_match",
+          "contentHandling" : "CONVERT_TO_TEXT",
+          "type" : "aws"
         }
       }
     }
@@ -128,11 +163,6 @@
           "type": "integer",
           "format": "int8",
           "description": "id of the game"
-        },
-        "usrId": {
-          "type": "integer",
-          "format": "int8",
-          "description": "id of the user"
         },
         "state": {
           "type": "string",

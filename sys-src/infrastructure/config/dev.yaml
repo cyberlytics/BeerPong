@@ -8,4 +8,24 @@ dynamoDB:
 APIGateway:
   stackName: 'BeerpongoAPIGatewayStackDev'
   apiFile: './config/api_beerpongo.json'
-  id: 'Beerpongo-api'
+  id: 'BeerpongoDev-api'
+
+Lambda:
+  stackName: 'BeerpongoLambdaStackDev'
+  lambdas:
+    lambda_post:
+      name: "lambdaDev_post"
+      code: "./../backend/post_lambda"
+      handler: "lambda_get_dev"
+      runtime: "python3.9"
+    lambda_get:
+      name: "lambdaDev_get"
+      code: "./../backend/get_lambda"
+      handler: "lambda_get_dev"
+      runtime: "python3.9"
+    lambda_put:
+      name: "lambdaDev_put"
+      code: "./../backend/put_lambda"
+      handler: "put"
+      runtime: "python3.9"
+
