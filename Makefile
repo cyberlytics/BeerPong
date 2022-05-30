@@ -5,9 +5,12 @@ prepare:
 
 install-infrastructure:
 	cd sys-src/infrastructure && pipenv sync
+	cd sys-src/backend && pipenv sync
+	
 
 test-infrastructure: .install-dev-infrastructure
 	cd sys-src/infrastructure && pipenv run pytest
+	cd sys-src/backend && pipenv run pytest
 
 formatting-checks-infrastructure: .install-dev-infrastructure
 	cd sys-src/infrastructure && pipenv run flake8 . && pipenv run black . --check && pipenv run isort . --check
