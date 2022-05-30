@@ -1,7 +1,4 @@
 import pytest
-import os
-from aws_cdk import App
-from aws_cdk.assertions import Template
 from backend.lambda_put import put
 from moto import mock_dynamodb2
 import boto3
