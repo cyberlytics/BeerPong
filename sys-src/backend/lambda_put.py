@@ -7,7 +7,6 @@ def put(event):
     """
     Provide an event, that contains the following keys:
         - id
-        - user ID
         - state in the form '[ID]:[0-9, X],[ID]:[0-9, X],[ID]:[0-9, X],[ID]:[0-9, X],[ID]:[0-9, X];'
 
     Requires a role with read/write access to DynamoDB.
@@ -20,7 +19,6 @@ def put(event):
     """
 
     id = event.get("id")
-   # userID = event.get("usrID")
     state = event.get("state")
 
     #Define access to db
