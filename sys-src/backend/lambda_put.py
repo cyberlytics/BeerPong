@@ -3,11 +3,12 @@ import boto3
 
 
     
-def put(event):
+def put(event, table):
     """
     Provide an event, that contains the following keys:
         - id
         - state in the form '[ID]:[0-9, X],[ID]:[0-9, X],[ID]:[0-9, X],[ID]:[0-9, X],[ID]:[0-9, X];'
+        - 
 
     Requires a role with read/write access to DynamoDB.
 
@@ -22,7 +23,7 @@ def put(event):
     state = event.get("state")
 
     #Define access to db
-    table = boto3.resource("dynamodb").Table("gamesTable")
+    table = boto3.resource("dynamodb").Table(table)
 
     # Get the item that will be changed
     data = table.get_item(
@@ -48,8 +49,8 @@ def put(event):
         item = data['Item']
 
     #if item doesn't exist
-    except KeyError:
-        return {'statusCode': "400", 'body': json.dumps({})}
+    except KeyError as e:
+        return {'statusCode': "400", 'body': json.dumps({"error": e})}
 
     # update state string
     item['State']["S"] += state
@@ -58,8 +59,8 @@ def put(event):
     try:
         table.put_item(Item=item)
 
-    except:
-        return {'statusCode': "500", 'body': json.dumps({})}
+    except Exception as e:
+        return {'statusCode': "500", 'body': json.dumps({"error": e})}
 
     # if all went well
     response = {
