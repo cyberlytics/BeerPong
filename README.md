@@ -13,6 +13,20 @@
   aws_secret_access_key=XXX
   ```
 
+
+## pipenv - Python dependency administration
+Doc: https://pipenv.pypa.io/en/latest/
+
+### If you want to install a new package:
+1. Navigate to the `Pipfile` directory of your source code
+2. Run `pipenv install [PACKAGE_NAME]` and add `-d` if it is a package vor developing or testing purposes
+
+With `pipenv install` without a package name you can install all necessary packages for this Pipfile source directory.
+
+### If you want to run your code using dependencies installed with pipenv
+Run `pipenv run [SCRIPT_NAME]` like `pipenv run pytest` to run tests
+
+
 ## Prepare and Install
 Prepare python and pipenv:
 ```
@@ -23,11 +37,13 @@ Install pipenv dependencies:
 make install-infrastructure
 ```
 
+
 ## Test
 Run infrastructure unit tests:
 ```
 make test-infrastructure
 ```
+
 
 ## Deploy
 Deploy infrastructure stacks to AWS:
@@ -44,6 +60,7 @@ Destroy deployed infrastructure stacks in AWS:
 ```
 make destroy-infrastructure PROFILE=<deployment-profile> STACK=<stack_id> CONFIG=<env>
 ```
+
 
 ## Formatting
 Run python formatting checks for infrastructure code:
