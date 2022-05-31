@@ -6,7 +6,6 @@ prepare:
 install-infrastructure:
 	cd sys-src/infrastructure && pipenv sync
 	cd sys-src/backend && pipenv sync
-	
 
 test-infrastructure: .install-dev-infrastructure
 	cd sys-src/infrastructure && pipenv run pytest

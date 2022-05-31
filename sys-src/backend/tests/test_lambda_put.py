@@ -1,5 +1,5 @@
 import pytest
-from backend.lambda_put import put
+from lambda_put import put
 from moto import mock_dynamodb2
 import boto3
 
