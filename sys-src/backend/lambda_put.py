@@ -3,14 +3,14 @@ import boto3
 
 
     
-def put(event, table):
+def put(event, table="gamesTable"):
     """
     Provide an event, that contains the following keys:
         - GameId
         - State in the form '[ID]:[0-9, X],[ID]:[0-9, X],[ID]:[0-9, X],[ID]:[0-9, X],[ID]:[0-9, X]'
         
     
-    Provide table containing a string referring to the table name
+    table is the name of a table standard value is 'gamesTable'
 
     Requires a role with read/write access to DynamoDB.
 
@@ -53,7 +53,7 @@ def put(event, table):
 
     #if item doesn't exist
     except KeyError as e:
-        return {'statusCode': "400", 'body': json.dumps({"error": e})}
+        return {'statusCode': "400", 'exception': json.dumps({"error": e})}
 
     # update state string
     item['State'] += "," + state
@@ -63,12 +63,12 @@ def put(event, table):
         table.put_item(Item=item)
 
     except Exception as e:
-        return {'statusCode': "500", 'body': json.dumps({"error": e})}
+        return {'statusCode': "500", 'exception': json.dumps({"error": e})}
 
     # if all went well
     response = {
         'statusCode': "200",
-        'body': json.dumps({})
+        'body': json.dumps({"message": f"Game State of Game {id} updated"})
     }
 
     return response
