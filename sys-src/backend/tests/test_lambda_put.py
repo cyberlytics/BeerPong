@@ -7,9 +7,17 @@ import boto3
 
 TableName = "testTable"
 
+@pytest.fixture(scope='function')
+def aws_credentials():
+    """Mocked AWS Credentials for moto."""
+    os.environ['AWS_ACCESS_KEY_ID'] = 'testing'
+    os.environ['AWS_SECRET_ACCESS_KEY'] = 'testing'
+    os.environ['AWS_SECURITY_TOKEN'] = 'testing'
+    os.environ['AWS_SESSION_TOKEN'] = 'testing'
+    os.environ['AWS_DEFAULT_REGION'] = 'eu-central-1'
 
 @mock_dynamodb
-def test_put_lambda():
+def test_put_lambda(aws_credentials):
     dynamodb = boto3.client('dynamodb')
     dynamodb.create_table(
             TableName=TableName,
@@ -33,7 +41,8 @@ def test_put_lambda():
     },
     TableName=TableName
     )
-
+    
+    
     #----- check if we can Update--------
 
     p1_state = "1:6"
