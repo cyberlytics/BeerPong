@@ -7,7 +7,7 @@ def put(event, table):
     """
     Provide an event, that contains the following keys:
         - GameId
-        - State in the form '[ID]:[0-9, X],[ID]:[0-9, X],[ID]:[0-9, X],[ID]:[0-9, X],[ID]:[0-9, X];'
+        - State in the form '[ID]:[0-9, X],[ID]:[0-9, X],[ID]:[0-9, X],[ID]:[0-9, X],[ID]:[0-9, X]'
         
     
     Provide table containing a string referring to the table name
@@ -41,7 +41,7 @@ def put(event, table):
     #        "S": "exampleid"
     #    },
     #    "State": {
-    #        "S": "[ID]:[0-9, X],[ID]:[0-9, X],[ID]:[0-9, X],[ID]:[0-9, X],[ID]:[0-9, X];"
+    #        "S": "[ID]:[0-9, X],[ID]:[0-9, X],[ID]:[0-9, X],[ID]:[0-9, X],[ID]:[0-9, X]"
     #    }
     #  }
 
