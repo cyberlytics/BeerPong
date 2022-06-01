@@ -3,13 +3,13 @@ prepare:
 	python -m pip install --upgrade pip
 	python -m pip install --upgrade pipenv
 
+#-----------Infrastructure Commands-------------------------
+
 install-infrastructure:
 	cd sys-src/infrastructure && pipenv sync
-	cd sys-src/backend && pipenv sync
 
 test-infrastructure: .install-dev-infrastructure
 	cd sys-src/infrastructure && pipenv run pytest
-	cd sys-src/backend && pipenv run pytest
 
 formatting-checks-infrastructure: .install-dev-infrastructure
 	cd sys-src/infrastructure && pipenv run flake8 . && pipenv run black . --check && pipenv run isort . --check
@@ -25,3 +25,20 @@ destroy-infrastructure: install-infrastructure
 
 .install-dev-infrastructure:
 	cd sys-src/infrastructure && pipenv sync --dev
+
+# ------------BACKEND Commands-------------------------------
+
+install-backend:
+	cd sys-src/backend && pipenv sync
+
+test-backend: .install-dev-backend
+	cd sys-src/backend && pipenv run pytest
+
+.install-dev-backend:
+	cd sys-src/backend && pipenv sync --dev
+
+formatting-checks-backend: .install-dev-backend
+	cd sys-src/backend && pipenv run flake8 . && pipenv run black . --check && pipenv run isort . --check
+
+format-backend: .install-dev-backend
+	cd sys-src/backend && pipenv run black . && pipenv run isort .
