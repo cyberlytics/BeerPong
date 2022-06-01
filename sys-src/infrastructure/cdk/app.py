@@ -49,20 +49,12 @@ LambdaStack = BeerpongoLambdaStack(app, config["Lambda"]["stackName"], config)
 # Get the ARN-References of the Lambdas
 get_ARN = json.dumps(LambdaStack.resolve(
     LambdaStack.lambda_get.function_arn))
-get_credentials = json.dumps(LambdaStack.resolve(
-    LambdaStack.lambda_get.role.role_arn))
 post_ARN = json.dumps(LambdaStack.resolve(
     LambdaStack.lambda_post.function_arn))
-post_credentials = json.dumps(LambdaStack.resolve(
-    LambdaStack.lambda_post.role.role_arn))
 put_ARN = json.dumps(LambdaStack.resolve(
     LambdaStack.lambda_put.function_arn))
-put_credentials = json.dumps(LambdaStack.resolve(
-    LambdaStack.lambda_put.role.role_arn))
 
-info = {"get_ARN": get_ARN, "post_ARN": post_ARN, "put_ARN": put_ARN,
-        "get_Credentials": get_credentials, "post_Credentials":
-            post_credentials, "put_Credentials": put_credentials}
+info = {"get_ARN": get_ARN, "post_ARN": post_ARN, "put_ARN": put_ARN}
 
 # Create API-Gateway stack
 BeerpongoAPIGatewayStack(app, config["APIGateway"]["stackName"], config,

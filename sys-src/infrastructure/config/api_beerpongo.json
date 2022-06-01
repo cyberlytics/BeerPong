@@ -36,7 +36,7 @@
         },
         "x-amazon-apigateway-integration": {
           "httpMethod" : "POST",
-          "uri": "arn:aws:apigateway:eu-central-1:lambda:path/2015-03-31/functions/arn:aws:lambda:eu-central-1:016042176108:function:BeerpongoLambdaStackDev-lambdaDevpost0B9075AB-PsbU1JkOzfDK/invocations",
+          "uri": "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/arn:aws:lambda:eu-central-1:016042176108:function:BeerpongoLambdaStackDev-lambdaDevpost0B9075AB-PsbU1JkOzfDK/invocations",
           "responses" : {
             "default" : {
               "statusCode" : "200"
@@ -84,7 +84,7 @@
         },
         "x-amazon-apigateway-integration": {
           "httpMethod" : "POST",
-          "uri": "arn:aws:apigateway:eu-central-1:lambda:path/2015-03-31/functions/arn:aws:lambda:eu-central-1:016042176108:function:BeerpongoLambdaStackDev-lambdaDevput6F6E2F29-whKmRmdyuJRx/invocations",
+          "uri": "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/arn:aws:lambda:eu-central-1:016042176108:function:BeerpongoLambdaStackDev-lambdaDevput6F6E2F29-whKmRmdyuJRx/invocations",
           "responses" : {
             "default" : {
               "statusCode" : "200"
@@ -128,7 +128,7 @@
         },
         "x-amazon-apigateway-integration": {
           "httpMethod" : "POST",
-          "uri": "arn:aws:apigateway:eu-central-1:lambda:path/2015-03-31/functions/arn:aws:lambda:eu-central-1:016042176108:function:BeerpongoLambdaStackDev-lambdaDevput6F6E2F29-whKmRmdyuJRx/invocations",
+          "uri": "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/arn:aws:lambda:eu-central-1:016042176108:function:BeerpongoLambdaStackDev-lambdaDevput6F6E2F29-whKmRmdyuJRx/invocations",
           "responses" : {
             "default" : {
               "statusCode" : "200"
