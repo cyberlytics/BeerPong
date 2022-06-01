@@ -16,9 +16,6 @@ class BeerpongoAPIGatewayStack(Stack):
 
         # Before we can load the API-File, we need to replace the place-holders
         # with the given function-ARN from the lambdas
-        CREDENTIALS_GAME_POST = "\"${CREDENTIALS-GAME_POST}\""
-        CREDENTIALS_GAME_PUT = "\"${CREDENTIALS-GAME_PUT}\""
-        CREDENTIALS_GAME_GET = "\"${CREDENTIALS-GAME_GET}\""
 
         ARN_GAME_POST = "\"${ARN_URI-GAME_POST}\""
         ARN_GAME_PUT = "\"${ARN_URI-GAME_PUT}\""
@@ -28,15 +25,10 @@ class BeerpongoAPIGatewayStack(Stack):
         with open(apiFile, 'r') as file:
             filedata = file.read()
 
-        print(LambdaInfo["post_ARN"])
-
         newdata = filedata.replace(
             ARN_GAME_POST, LambdaInfo["post_ARN"]).replace(
             ARN_GAME_PUT, LambdaInfo["put_ARN"]).replace(
-            ARN_GAME_GET, LambdaInfo["get_ARN"]).replace(
-            CREDENTIALS_GAME_POST, LambdaInfo["post_Credentials"]).replace(
-            CREDENTIALS_GAME_PUT, LambdaInfo["put_Credentials"]).replace(
-            CREDENTIALS_GAME_GET, LambdaInfo["get_Credentials"])
+            ARN_GAME_GET, LambdaInfo["get_ARN"])
 
         # We save the file under a different name
         new_name = apiFile.replace(".json", "_.json")
