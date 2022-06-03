@@ -13,7 +13,6 @@ class BeerpongoDynamoDbStack(Stack):
         games_table_config = dynamodb_config.get("gamesTable")
 
         # Create DynamoDB games table with 'GameId' as String partition key
-        # and 'StartTime' as Number sort key
         self.games_table = dynamodb.Table(
             self,
             id=games_table_config["id"],
@@ -21,8 +20,5 @@ class BeerpongoDynamoDbStack(Stack):
             billing_mode=dynamodb.BillingMode.PAY_PER_REQUEST,
             partition_key=dynamodb.Attribute(
                 name="GameId", type=dynamodb.AttributeType.STRING
-            ),
-            sort_key=dynamodb.Attribute(
-                name="StartTime", type=dynamodb.AttributeType.NUMBER
             ),
         )
