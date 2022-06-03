@@ -1,4 +1,5 @@
 import json
+
 from aws_cdk import Stack
 from aws_cdk import aws_apigateway as apigateway
 from constructs import Construct
@@ -6,8 +7,12 @@ from constructs import Construct
 
 class BeerpongoAPIGatewayStack(Stack):
     def __init__(
-        self, scope: Construct, construct_id: str, config: dict,
-        LambdaInfo: dict, **kwargs
+        self,
+        scope: Construct,
+        construct_id: str,
+        config: dict,
+        LambdaInfo: dict,
+        **kwargs
     ) -> None:
         super().__init__(scope, construct_id, **kwargs)
 
@@ -26,10 +31,11 @@ class BeerpongoAPIGatewayStack(Stack):
         with open(apiFile, 'r') as file:
             filedata = file.read()
 
-        newdata = filedata.replace(
-            ARN_GAME_POST, LambdaInfo["post_LambdaName"]).replace(
-            ARN_GAME_PUT, LambdaInfo["put_LambdaName"]).replace(
-            ARN_GAME_GET, LambdaInfo["get_LambdaName"])
+        newdata = (
+            filedata.replace(ARN_GAME_POST, LambdaInfo["post_LambdaName"])
+            .replace(ARN_GAME_PUT, LambdaInfo["put_LambdaName"])
+            .replace(ARN_GAME_GET, LambdaInfo["get_LambdaName"])
+        )
 
         # We save the file under a different name
         new_name = apiFile.replace(".json", "_.json")
@@ -41,5 +47,6 @@ class BeerpongoAPIGatewayStack(Stack):
             self,
             id=apiId,
             api_definition=apigateway.ApiDefinition.from_inline(
-                json.loads(newdata))
+                json.loads(newdata)
+            ),
         )

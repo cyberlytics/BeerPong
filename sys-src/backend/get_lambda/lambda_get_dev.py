@@ -2,7 +2,7 @@ import boto3
 import json
 
 
-def lambda_get_dev(event):
+def get(event):
     """
     Provide an event, that contains the following keys:
         - id

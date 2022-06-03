@@ -35,18 +35,17 @@
           }
         },
         "x-amazon-apigateway-integration": {
-          "httpMethod" : "POST",
+          "httpMethod": "POST",
           "uri": "arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${LambdaArn-GAME_POST}/invocations",
-          "responses" : {
-            "default" : {
-              "statusCode" : "200"
+          "responses": {
+            "default": {
+              "statusCode": "200"
             }
           },
-          "passthroughBehavior" : "when_no_match",
-          "contentHandling" : "CONVERT_TO_TEXT",
-          "type" : "aws"
+          "passthroughBehavior": "when_no_match",
+          "contentHandling": "CONVERT_TO_TEXT",
+          "type": "aws"
         }
-      }
       },
       "put": {
         "tags": [
@@ -84,18 +83,19 @@
           }
         },
         "x-amazon-apigateway-integration": {
-          "httpMethod" : "POST",
+          "httpMethod": "POST",
           "uri": "arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${LambdaArn-GAME_PUT}/invocations",
-          "responses" : {
-            "default" : {
-              "statusCode" : "200"
+          "responses": {
+            "default": {
+              "statusCode": "200"
             }
           },
-          "passthroughBehavior" : "when_no_match",
-          "contentHandling" : "CONVERT_TO_TEXT",
-          "type" : "aws"
+          "passthroughBehavior": "when_no_match",
+          "contentHandling": "CONVERT_TO_TEXT",
+          "type": "aws"
         }
-      },
+      }
+    },
     "/game/{gameId}": {
       "get": {
         "tags": [

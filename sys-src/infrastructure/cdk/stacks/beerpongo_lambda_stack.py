@@ -30,7 +30,7 @@ class BeerpongoLambdaStack(Stack):
             id=get_config["name"],
             runtime=lambda_.Runtime(get_config["runtime"]),
             handler=get_config["handler"],
-            code=lambda_.Code. from_asset(get_config["code"]),
+            code=lambda_.Code.from_asset(get_config["code"]),
         )
 
         self.lambda_put = lambda_.Function(
