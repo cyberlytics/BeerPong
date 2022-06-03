@@ -53,19 +53,19 @@ def template(lambda_stack):
 
 def test_lambda_stack(app, lambda_stack, template: Template):
     # Get the Bucket-names of the lambda-folders
-    asset_get = Asset(lambda_stack,
-                      "Lambda-Get",
-                      path="./../backend/get_lambda/")
+    asset_get = Asset(
+        lambda_stack, "Lambda-Get", path="./../backend/get_lambda/"
+    )
     get_name = lambda_stack.resolve(asset_get.s3_bucket_name)
 
-    asset_post = Asset(lambda_stack,
-                       "Lambda-Post",
-                       path="./../backend/post_lambda/")
+    asset_post = Asset(
+        lambda_stack, "Lambda-Post", path="./../backend/post_lambda/"
+    )
     post_name = lambda_stack.resolve(asset_get.s3_bucket_name)
 
-    asset_put = Asset(lambda_stack,
-                      "Lambda-Put",
-                      path="./../backend/put_lambda/")
+    asset_put = Asset(
+        lambda_stack, "Lambda-Put", path="./../backend/put_lambda/"
+    )
     put_name = lambda_stack.resolve(asset_get.s3_bucket_name)
 
     template.has_resource_properties(
@@ -73,10 +73,7 @@ def test_lambda_stack(app, lambda_stack, template: Template):
         {
             "Handler": "lambda_get_dev",
             "Runtime": "python3.9",
-            "Code": {
-                "S3Bucket": get_name,
-                "S3Key": asset_get.s3_object_key
-            }
+            "Code": {"S3Bucket": get_name, "S3Key": asset_get.s3_object_key},
         },
     )
     template.has_resource_properties(
@@ -84,10 +81,7 @@ def test_lambda_stack(app, lambda_stack, template: Template):
         {
             "Handler": "lambda_get_dev",
             "Runtime": "python3.9",
-            "Code": {
-                "S3Bucket": post_name,
-                "S3Key": asset_post.s3_object_key
-            }
+            "Code": {"S3Bucket": post_name, "S3Key": asset_post.s3_object_key},
         },
     )
     template.has_resource_properties(
@@ -95,9 +89,6 @@ def test_lambda_stack(app, lambda_stack, template: Template):
         {
             "Handler": "put",
             "Runtime": "python3.9",
-            "Code": {
-                "S3Bucket": put_name,
-                "S3Key": asset_put.s3_object_key
-            }
+            "Code": {"S3Bucket": put_name, "S3Key": asset_put.s3_object_key},
         },
     )

@@ -16,12 +16,12 @@ Lambda:
     lambda_post:
       name: "lambdaDev_post"
       code: "./../backend/post_lambda"
-      handler: "lambda_get_dev"
+      handler: "post"
       runtime: "python3.9"
     lambda_get:
       name: "lambdaDev_get"
       code: "./../backend/get_lambda"
-      handler: "lambda_get_dev"
+      handler: "get"
       runtime: "python3.9"
     lambda_put:
       name: "lambdaDev_put"

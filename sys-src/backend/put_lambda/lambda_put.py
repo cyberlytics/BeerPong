@@ -1,9 +1,7 @@
-import json
 import boto3
 
 
-    
-def put(event,context):
+def put(event, context):
     """
     
     """
@@ -19,8 +17,6 @@ def put(event,context):
     response = client.get_item(
         TableName='gamesTable',
         Key={
-            "GameId":{"N": id}
+            "GameId": {"N": id}
         },
     )
-
-    

@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import logging
+
 import aws_cdk as cdk
 import yaml
 from stacks.beerpongo_api_gateway_stack import BeerpongoAPIGatewayStack
@@ -20,7 +21,7 @@ def get_config():
     try:
         env = app.node.try_get_context("config")
         with open(
-                file="./config/" + env + ".yaml", mode="r", encoding="utf8"
+            file="./config/" + env + ".yaml", mode="r", encoding="utf8"
         ) as stream:
             try:
                 c = yaml.safe_load(stream)
@@ -50,10 +51,14 @@ get_ARN = LambdaStack.lambda_get.function_arn
 post_ARN = LambdaStack.lambda_post.function_arn
 put_ARN = LambdaStack.lambda_put.function_arn
 
-info = {"get_LambdaName": get_ARN, "post_LambdaName": post_ARN,
-        "put_LambdaName": put_ARN}
+info = {
+    "get_LambdaName": get_ARN,
+    "post_LambdaName": post_ARN,
+    "put_LambdaName": put_ARN,
+}
 
 # Create API-Gateway stack
-BeerpongoAPIGatewayStack(app, config["APIGateway"]["stackName"], config,
-                         LambdaInfo=info)
+BeerpongoAPIGatewayStack(
+    app, config["APIGateway"]["stackName"], config, LambdaInfo=info
+)
 app.synth()
