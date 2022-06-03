@@ -36,7 +36,7 @@
         },
         "x-amazon-apigateway-integration": {
           "httpMethod" : "POST",
-          "uri": "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/arn:aws:lambda:eu-central-1:016042176108:function:BeerpongoLambdaStackDev-lambdaDevpost0B9075AB-PsbU1JkOzfDK/invocations",
+          "uri": "arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${LambdaArn-GAME_POST}/invocations",
           "responses" : {
             "default" : {
               "statusCode" : "200"
@@ -46,6 +46,7 @@
           "contentHandling" : "CONVERT_TO_TEXT",
           "type" : "aws"
         }
+      }
       },
       "put": {
         "tags": [
@@ -84,7 +85,7 @@
         },
         "x-amazon-apigateway-integration": {
           "httpMethod" : "POST",
-          "uri": "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/arn:aws:lambda:eu-central-1:016042176108:function:BeerpongoLambdaStackDev-lambdaDevput6F6E2F29-whKmRmdyuJRx/invocations",
+          "uri": "arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${LambdaArn-GAME_PUT}/invocations",
           "responses" : {
             "default" : {
               "statusCode" : "200"
@@ -94,8 +95,7 @@
           "contentHandling" : "CONVERT_TO_TEXT",
           "type" : "aws"
         }
-      }
-    },
+      },
     "/game/{gameId}": {
       "get": {
         "tags": [
@@ -128,7 +128,7 @@
         },
         "x-amazon-apigateway-integration": {
           "httpMethod" : "POST",
-          "uri": "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/arn:aws:lambda:eu-central-1:016042176108:function:BeerpongoLambdaStackDev-lambdaDevput6F6E2F29-whKmRmdyuJRx/invocations",
+          "uri": "arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${LambdaArn-GAME_GET}/invocations",
           "responses" : {
             "default" : {
               "statusCode" : "200"
