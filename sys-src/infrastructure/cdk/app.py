@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 import logging
-import json
 import aws_cdk as cdk
 import yaml
 from stacks.beerpongo_api_gateway_stack import BeerpongoAPIGatewayStack
@@ -46,15 +45,13 @@ BeerpongoDynamoDbStack(app, config["dynamoDB"]["stackName"], config)
 # Create Lambda stack
 LambdaStack = BeerpongoLambdaStack(app, config["Lambda"]["stackName"], config)
 
-# Get the ARN-References of the Lambdas
-get_ARN = json.dumps(LambdaStack.resolve(
-    LambdaStack.lambda_get.function_arn))
-post_ARN = json.dumps(LambdaStack.resolve(
-    LambdaStack.lambda_post.function_arn))
-put_ARN = json.dumps(LambdaStack.resolve(
-    LambdaStack.lambda_put.function_arn))
 
-info = {"get_ARN": get_ARN, "post_ARN": post_ARN, "put_ARN": put_ARN}
+get_ARN = LambdaStack.lambda_get.function_arn
+post_ARN = LambdaStack.lambda_post.function_arn
+put_ARN = LambdaStack.lambda_put.function_arn
+
+info = {"get_LambdaName": get_ARN, "post_LambdaName": post_ARN,
+        "put_LambdaName": put_ARN}
 
 # Create API-Gateway stack
 BeerpongoAPIGatewayStack(app, config["APIGateway"]["stackName"], config,

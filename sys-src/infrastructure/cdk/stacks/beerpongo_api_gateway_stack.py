@@ -1,3 +1,4 @@
+import json
 from aws_cdk import Stack
 from aws_cdk import aws_apigateway as apigateway
 from constructs import Construct
@@ -17,18 +18,18 @@ class BeerpongoAPIGatewayStack(Stack):
         # Before we can load the API-File, we need to replace the place-holders
         # with the given function-ARN from the lambdas
 
-        ARN_GAME_POST = "\"${ARN_URI-GAME_POST}\""
-        ARN_GAME_PUT = "\"${ARN_URI-GAME_PUT}\""
-        ARN_GAME_GET = "\"${ARN_URI-GAME_GET}\""
+        ARN_GAME_POST = "${LambdaArn-GAME_POST}"
+        ARN_GAME_PUT = "${LambdaArn-GAME_PUT}"
+        ARN_GAME_GET = "${LambdaArn-GAME_GET}"
 
         filedata = None
         with open(apiFile, 'r') as file:
             filedata = file.read()
 
         newdata = filedata.replace(
-            ARN_GAME_POST, LambdaInfo["post_ARN"]).replace(
-            ARN_GAME_PUT, LambdaInfo["put_ARN"]).replace(
-            ARN_GAME_GET, LambdaInfo["get_ARN"])
+            ARN_GAME_POST, LambdaInfo["post_LambdaName"]).replace(
+            ARN_GAME_PUT, LambdaInfo["put_LambdaName"]).replace(
+            ARN_GAME_GET, LambdaInfo["get_LambdaName"])
 
         # We save the file under a different name
         new_name = apiFile.replace(".json", "_.json")
@@ -39,5 +40,6 @@ class BeerpongoAPIGatewayStack(Stack):
         self._api = apigateway.SpecRestApi(
             self,
             id=apiId,
-            api_definition=apigateway.ApiDefinition.from_asset(new_name)
+            api_definition=apigateway.ApiDefinition.from_inline(
+                json.loads(newdata))
         )

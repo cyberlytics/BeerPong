@@ -1,7 +1,6 @@
 import pytest
 from aws_cdk import App
 from aws_cdk.assertions import Template
-from aws_cdk.aws_s3_assets import Asset
 from stacks.beerpongo_api_gateway_stack import BeerpongoAPIGatewayStack
 
 
@@ -23,10 +22,9 @@ def mock_config():
 
 @pytest.fixture
 def apigateway_stack(app, mock_config):
-    info = {"get_ARN": "get_ARN", "post_ARN": "post_ARN",
-            "put_ARN": "put_ARN",
-            "get_Credentials": "get_credentials", "post_Credentials":
-                "post_credentials", "put_Credentials": "put_credentials"}
+    info = {"get_LambdaName": "get_LambdaName",
+            "post_LambdaName": "post_LambdaName",
+            "put_LambdaName": "put_LambdaName"}
     yield BeerpongoAPIGatewayStack(
         app, construct_id="BeerpongoAPIGatewayStack", config=mock_config,
         LambdaInfo=info
@@ -41,18 +39,200 @@ def template(apigateway_stack):
 def test_beerpongo_api_gateway_stack(
         app, apigateway_stack, template: Template
 ):
-    # In order to check the bucket for the api_beerpong.json file, we need
-    # to create an asset and use here the values
-    asset = Asset(apigateway_stack,
-                  "Api-Beerpong",
-                  path="./config/api_beerpongo_.json")
-
-    bucketname = asset.s3_bucket_name
-    name = apigateway_stack.resolve(bucketname)
     template.has_resource_properties(
         "AWS::ApiGateway::RestApi",
         {
-            "Name": "Beerpongo-api",
-            "BodyS3Location": {"Bucket": name, "Key": asset.s3_object_key},
-        },
+                "Body": {
+                    "swagger": "2.0",
+                    "info": {
+                        "description": "API for Beerpongo",
+                        "version": "0.1.0",
+                        "title": "Beerpongo"
+                    },
+                    "tags": [
+                        {
+                            "name": "Game",
+                            "description": "Operations for a game."
+                        }
+                    ],
+                    "paths": {
+                        "/game": {
+                            "post": {
+                                "tags": [
+                                    "Game"
+                                ],
+                                "summary": "Create a new game",
+                                "description": "Creates a new game.",
+                                "operationId": "create game",
+                                "produces": [
+                                    "application/json"
+                                ],
+                                "responses": {
+                                    "200": {
+                                        "description": "New game created.",
+                                        "schema": {
+                                            "$ref": "#/definitions/Game"
+                                        }
+                                    },
+                                    "400": {
+                                        "description": "Error"
+                                    }
+                                },
+                                "x-amazon-apigateway-integration": {
+                                    "httpMethod": "POST",
+                                    "uri": "arn:${AWS::Partition}:apigateway"
+                                           ":${"
+                                           "AWS::Region}:lambda:path/2015-03"
+                                           "-31/functions/post_LambdaName"
+                                           "/invocations",
+                                    "responses": {
+                                        "default": {
+                                            "statusCode": "200"
+                                        }
+                                    },
+                                    "passthroughBehavior": "when_no_match",
+                                    "contentHandling": "CONVERT_TO_TEXT",
+                                    "type": "aws"
+                                }
+                            }
+                        },
+                        "put": {
+                            "tags": [
+                                "Game"
+                            ],
+                            "summary": "Update an existing game",
+                            "description": "",
+                            "operationId": "updateGame",
+                            "consumes": [
+                                "application/json"
+                            ],
+                            "produces": [
+                                "application/json"
+                            ],
+                            "parameters": [
+                                {
+                                    "in": "body",
+                                    "name": "body",
+                                    "description": "Game-object tha needs to "
+                                                   "be updated.",
+                                    "required": True,
+                                    "schema": {
+                                        "$ref": "#/definitions/GameUpdate"
+                                    }
+                                }
+                            ],
+                            "responses": {
+                                "200": {
+                                    "description": "Update ok"
+                                },
+                                "400": {
+                                    "description": "Invalid ID supplied"
+                                },
+                                "404": {
+                                    "description": "Game not found"
+                                }
+                            },
+                            "x-amazon-apigateway-integration": {
+                                "httpMethod": "POST",
+                                "uri": "arn:${AWS::Partition}:apigateway:${"
+                                       "AWS::Region}:lambda:path/2015-03-31"
+                                       "/functions/put_LambdaName/invocations",
+                                "responses": {
+                                    "default": {
+                                        "statusCode": "200"
+                                    }
+                                },
+                                "passthroughBehavior": "when_no_match",
+                                "contentHandling": "CONVERT_TO_TEXT",
+                                "type": "aws"
+                            }
+                        },
+                        "/game/{gameId}": {
+                            "get": {
+                                "tags": [
+                                    "Game"
+                                ],
+                                "summary": "Get an existing game",
+                                "description": "",
+                                "produces": [
+                                    "application/json"
+                                ],
+                                "parameters": [
+                                    {
+                                        "in": "path",
+                                        "name": "gameId",
+                                        "required": True,
+                                        "type": "integer",
+                                        "format": "int8"
+                                    }
+                                ],
+                                "responses": {
+                                    "200": {
+                                        "description": "Game found",
+                                        "schema": {
+                                            "$ref": "#/definitions/Game"
+                                        }
+                                    },
+                                    "404": {
+                                        "description": "Game not found"
+                                    }
+                                },
+                                "x-amazon-apigateway-integration": {
+                                    "httpMethod": "POST",
+                                    "uri": "arn:${AWS::Partition}:apigateway"
+                                           ":${"
+                                           "AWS::Region}:lambda:path/2015-03"
+                                           "-31/functions/get_LambdaName"
+                                           "/invocations",
+                                    "responses": {
+                                        "default": {
+                                            "statusCode": "200"
+                                        }
+                                    },
+                                    "passthroughBehavior": "when_no_match",
+                                    "contentHandling": "CONVERT_TO_TEXT",
+                                    "type": "aws"
+                                }
+                            }
+                        }
+                    },
+                    "definitions": {
+                        "Game": {
+                            "type": "object",
+                            "properties": {
+                                "id": {
+                                    "type": "integer",
+                                    "format": "int8",
+                                    "description": "id of the game"
+                                },
+                                "state": {
+                                    "type": "string",
+                                    "description": "current state of the "
+                                                   "game in the form \"["
+                                                   "ID]:[0-9, X],[ID]:[0-9, "
+                                                   "X],[ID]:[0-9, X],"
+                                                   "[ID]:[0-9, X],[ID]:[0-9, "
+                                                   "X];\" "
+                                }
+                            }
+                        },
+                        "GameUpdate": {
+                            "type": "object",
+                            "properties": {
+                                "id": {
+                                    "type": "integer",
+                                    "format": "int8",
+                                    "description": "id of the game"
+                                },
+                                "state": {
+                                    "type": "string",
+                                    "description": "[0-9, X]"
+                                }
+                            }
+                        }
+                    }
+                },
+                "Name": "Beerpongo-api"
+            }
+
     )
