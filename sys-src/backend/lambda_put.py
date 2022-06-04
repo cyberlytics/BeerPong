@@ -3,14 +3,12 @@ import boto3
 
 
     
-def put(event, table="gamesTable"):
+def put(event, context):
     """
     Provide an event, that contains the following keys:
         - GameId
         - State in the form '[ID]:[0-9, X],[ID]:[0-9, X],[ID]:[0-9, X],[ID]:[0-9, X],[ID]:[0-9, X]'
-        
-    
-    table is the name of a table standard value is 'gamesTable'
+        - optional: table referring to the table name to update
 
     Requires a role with read/write access to DynamoDB.
 
@@ -25,8 +23,13 @@ def put(event, table="gamesTable"):
     id = event.get("GameId")
     state = event.get("State")
 
+    try:
+        tablename = event.get("table")
+    except KeyError:
+        tablename = "gamesTable"
+
     #Define access to db
-    table = boto3.resource("dynamodb").Table(table)
+    table = boto3.resource("dynamodb").Table(tablename)
 
     # Get the item that will be changed
     data = table.get_item(
@@ -46,14 +49,16 @@ def put(event, table="gamesTable"):
     #  }
 
 
-    #Hier kann checking eingebaut werden z.B ob der gleiche User nochmal etwas schickt usw.
+    #Hier kann checking eingebaut werden z.B ob der gleiche User zwei Züge nacheinander schickt usw.
 
     try:
         item = data['Item']
 
     #if item doesn't exist
-    except KeyError as e:
-        return {'statusCode': "400", 'exception': json.dumps({"error": e})}
+    except KeyError:
+        return {'statusCode': 400, 'exception': "Game not found"}
+    except:
+        return {'statusCode': 500, 'exception': "Error updating Game"}
 
     # update state string
     item['State'] += "," + state
@@ -62,12 +67,12 @@ def put(event, table="gamesTable"):
     try:
         table.put_item(Item=item)
 
-    except Exception as e:
-        return {'statusCode': "500", 'exception': json.dumps({"error": e})}
+    except:
+        return {'statusCode': 500, 'exception': "Error updating Game"}
 
     # if all went well
     response = {
-        'statusCode': "200",
+        'statusCode': 200,
         'body': json.dumps({"message": f"Game State of Game {id} updated"})
     }
 
