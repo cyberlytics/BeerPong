@@ -8,6 +8,10 @@ boto3 = "*"
 moto = "*"
 
 [dev-packages]
+moto = "*"
+flake8 = "*"
+black = "*"
+isort = "*"
 pytest = "*"
 
 [requires]

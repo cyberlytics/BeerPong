@@ -15,3 +15,6 @@ __pycache__
 # CDK asset staging directory
 .cdk.staging
 cdk.out
+
+# changed api-file
+/sys-src/infrastructure/config/api_beerpongo_.json
