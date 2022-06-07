@@ -8,7 +8,14 @@ import boto3
 alphabet = string.ascii_letters + string.digits
 
 
-def post(table="gamesTable"):
+def generate_game_id():
+    """
+    :return: a randomly generated game id string with 8 characters
+    """
+    return "".join(random.choices(alphabet, k=8))
+
+
+def post(table="gamesTable", game_id=generate_game_id()):
     """
     Creates and puts a new Game item into dynamodb table.
     Requires a role with write access to DynamoDB.
@@ -22,15 +29,16 @@ def post(table="gamesTable"):
             500 Error creating the Game item
     """
 
-    # create a random game id with 8 characters
-    game_id = "".join(random.choices(alphabet, k=8))
-
     table = boto3.resource("dynamodb").Table(table)
 
-    new_game = {"GameId": game_id, "State": ""}
-
     try:
+        # check if game item with given id already exists
+        data = table.get_item(Key={"GameId": game_id})
+        if "Item" in data:
+            raise "Game item with id=%s already exists" % game_id
+
         # put new item into database
+        new_game = {"GameId": game_id, "State": ""}
         table.put_item(Item=new_game)
 
         return {"statusCode": "200", "body": json.dumps(new_game)}
