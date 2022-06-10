@@ -6,16 +6,14 @@ function GameMenu() {
         <div>
             <div>
                 <input type="text" name="gameid"></input>
-                <button onClick={GameConnectionController.tryJoiningGame}>Join Game</button>
+                {/* TODO: We need to pass the input of 'gameid' to the function */}
+                <button onClick={() => {GameConnectionController.tryJoiningGame(123)}}>Join Game</button>
             </div> 
             <div>    
-                <button onClick={GameConnectionController.tryCreatingGame}>Create Game</button>
+                <button onClick={() => {GameConnectionController.tryCreatingGame()}}>Create Game</button>
             </div>
         </div>
      );
 }
 
 export default GameMenu;
-
-
-
