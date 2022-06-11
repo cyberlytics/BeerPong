@@ -12,4 +12,7 @@ export class GameConnectionController{
         throw("Not implemented!");
     }
 
+    static tryFinishTurn(){
+        throw("Not implemented!");
+    }
 }
