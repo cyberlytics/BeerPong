@@ -1,3 +1,3 @@
-export const GET_GAME_URL = "http://beerpongo-backend/?gameid={GAME_ID}"
+export const GET_GAME_URL = "http://beerpongo-backend/game/{GAME_ID}"
 export const PUT_GAME_URL = "http://beerpongo-backend"
 export const POST_GAME_URL = "http://beerpongo-backend"
