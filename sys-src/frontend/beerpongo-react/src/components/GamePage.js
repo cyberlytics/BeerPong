@@ -1,11 +1,12 @@
 import { GameConnectionController } from "../model/GameConnectionController";
-import {useParams} from "react-router-dom";
+import {useParams, useNavigate} from "react-router-dom";
 import Field from "./Field";
 
 //missing CSS
 function GamePage() {
 
     const {id} = useParams();
+    const navigate = useNavigate();
     let gameString = GameConnectionController.tryGettingGame(id).split(',');
 
     // Build up the default dictionary
@@ -100,7 +101,8 @@ function GamePage() {
         <div>
             <p>ID: {id}</p>
             <Field dictVal={dict}/>
-            <button onClick={() => {GameConnectionController.tryQuitGame(id)}}>Beenden</button>
+            {/* Quitting the game will lead the user to the game menu page */}
+            <button onClick={() => navigate('/')}>Spiel Beenden</button>
         </div>
     );
     return (
