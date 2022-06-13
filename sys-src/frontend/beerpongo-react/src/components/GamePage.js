@@ -101,6 +101,8 @@ function GamePage() {
         <div>
             <p>ID: {id}</p>
             <Field dictVal={dict}/>
+            {/* TODO: commit the hitted cups*/}
+            <button onClick={() => GameConnectionController.tryUpdatingGame("X")}>Spielzug beenden</button>
             {/* Quitting the game will lead the user to the game menu page */}
             <button onClick={() => navigate('/')}>Spiel Beenden</button>
         </div>
