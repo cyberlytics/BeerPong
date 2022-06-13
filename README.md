@@ -34,14 +34,18 @@ make prepare
 ```
 Install pipenv dependencies:
 ```
+make install
 make install-infrastructure
+make install-backend
 ```
 
 
 ## Test
-Run infrastructure unit tests:
+Run unit tests:
 ```
+make test
 make test-infrastructure
+make test-backend
 ```
 
 
@@ -65,9 +69,13 @@ make destroy-infrastructure PROFILE=<deployment-profile> STACK=<stack_id> CONFIG
 ## Formatting
 Run python formatting checks for infrastructure code:
 ```
+make formatting-checks
 make formatting-checks-infrastructure
+make formatting-checks-backend
 ```
 Auto-format python infrastructure 
 ```
+make format
 make format-infrastructure
+make format-backend
 ```
