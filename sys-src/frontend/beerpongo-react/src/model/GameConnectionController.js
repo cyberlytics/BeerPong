@@ -1,5 +1,5 @@
 import axios from 'axios'
-import {GET_GAME_URL, POST_GAME_URL, PUT_GAME_URL} from "../constants/BackendUrl";
+import {GET_GAME_URL, POST_GAME_URL, PUT_GAME_URL, JOIN_GAME_URL} from "../constants/BackendUrl";
 
 export class GameConnectionController {
 
@@ -14,12 +14,12 @@ export class GameConnectionController {
   }
 
   static tryJoiningGame(gameId) {
-    const url = GET_GAME_URL.replace("{GAME_ID}", gameId)
+    const url = JOIN_GAME_URL.replace("{GAME_ID}", gameId)
 
     axios.get(url)
-      .then(data => {
-        // Todo
-        console.log(data);
+      .then(response => {
+        console.log(response);
+        return response.data;
       }).catch(err => {
       // Todo
       console.error(err)
@@ -35,7 +35,7 @@ export class GameConnectionController {
       // Todo
       console.error(err)
     })
-  }
+
 
         throw new Error("Not implemented!");
     }
@@ -43,7 +43,7 @@ export class GameConnectionController {
     static tryGettingGame(id){
         // TODO: Replace with real implementation
         console.log("Called tryGettingGame");
-        return "2:3X,1:5X,1:2X,1:4X,2:7X,2:5X";
+        return "2:3X,1:5X,1:2X,1:4X,2:7X";
         // throw new Error("Not implemented!");
     }
 
