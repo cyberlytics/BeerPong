@@ -7,7 +7,7 @@ def put(event, context):
     """
     Provide an event, that contains the following keys:
         - GameId
-        - State in the form '[ID]:[0-9, X],[ID]:[0-9, X],[ID]:[0-9, X],[ID]:[0-9, X],[ID]:[0-9, X]'
+        - State in the form '[ID]:[0-9, X]'
         - optional: table referring to the table name to update
     
     Requires a role with read/write access to DynamoDB.
@@ -48,8 +48,6 @@ def put(event, context):
     #    }
     #  }
 
-
-    #Hier kann checking eingebaut werden z.B ob der gleiche User zwei Züge nacheinander schickt usw.
 
     try:
         item = data['Item']
