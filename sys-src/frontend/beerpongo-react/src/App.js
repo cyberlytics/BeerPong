@@ -1,15 +1,17 @@
 import './App.css';
 import GameMenu from './components/GameMenu';
-import Field from './components/Field';
-import EndOfRound from './components/EndOfRound';
+import GamePage from "./components/GamePage";
+import {Route, Routes} from "react-router-dom";
+
 
 function App() {
   return (
-    <div className="App">
-      <GameMenu></GameMenu>
-        <Field></Field>
-      <EndOfRound></EndOfRound>
-    </div>
+      <Routes>
+          <Route exact path='/' element={<GameMenu/>}>
+          </Route>
+          <Route exact path='/game/:id' element={<GamePage/>}>
+          </Route>
+      </Routes>
   );
 }
 
