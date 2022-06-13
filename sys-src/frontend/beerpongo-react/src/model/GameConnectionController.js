@@ -1,14 +1,41 @@
-export class GameConnectionController{
+import axios from 'axios'
+import {GET_GAME_URL, POST_GAME_URL, PUT_GAME_URL} from "../constants/BackendUrl";
 
+export class GameConnectionController {
 
-    static tryJoiningGame(gameid){
+  static tryCreatingGame() {
+    axios.post(POST_GAME_URL).then(data => {
+      // Todo
+      console.log(data);
+    }).catch(err => {
+      // Todo
+      console.error(err)
+    })
+  }
 
-        throw("Not implemented!");
+  static tryJoiningGame(gameId) {
+    const url = GET_GAME_URL.replace("{GAME_ID}", gameId)
 
-        throw new Error("Not implemented!");
-    }
+    axios.get(url)
+      .then(data => {
+        // Todo
+        console.log(data);
+      }).catch(err => {
+      // Todo
+      console.error(err)
+    })
+  }
 
-    static tryCreatingGame(){   
+  static tryUpdatingGame(gameUpdate) {
+    axios.put(PUT_GAME_URL, gameUpdate)
+      .then(data => {
+        // Todo
+        console.log(data);
+      }).catch(err => {
+      // Todo
+      console.error(err)
+    })
+  }
 
         throw new Error("Not implemented!");
     }
