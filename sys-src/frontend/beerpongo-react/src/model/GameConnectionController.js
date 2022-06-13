@@ -26,9 +26,4 @@ export class GameConnectionController{
         // throw new Error("Not implemented!");
     }
 
-    static tryQuitGame(id){
-        console.log("Called tryQuitGame");
-        // throw new Error("Not implemented!");
-    }
-
 }
