@@ -39,6 +39,3 @@ function GameMenu() {
 }
 
 export default GameMenu;
-
-
-
