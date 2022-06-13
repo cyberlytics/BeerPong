@@ -1,7 +1,9 @@
 export class GameConnectionController{
 
 
-    static tryJoiningGame(id){
+    static tryJoiningGame(gameid){
+
+        throw("Not implemented!");
 
         throw new Error("Not implemented!");
     }

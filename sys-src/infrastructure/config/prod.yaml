@@ -4,3 +4,27 @@ dynamoDB:
   gamesTable:
     id: 'BeerpongoProdGamesTable'
     tableName: 'BeerpongoProdGamesTable'
+
+APIGateway:
+  stackName: 'BeerpongoAPIGatewayStackProd'
+  apiFile: './config/api_beerpongo.json'
+  id: 'BeerpongoProd-api'
+
+Lambda:
+  stackName: 'BeerpongoLambdaStackProd'
+  lambdas:
+    lambda_post:
+      name: "lambdaProd_post"
+      code: "./../backend/post_lambda"
+      handler: "post"
+      runtime: "python3.9"
+    lambda_get:
+      name: "lambdaProd_get"
+      code: "./../backend/get_lambda"
+      handler: "lambda_get_dev"
+      runtime: "python3.9"
+    lambda_put:
+      name: "lambdaProd_put"
+      code: "./../backend/put_lambda"
+      handler: "put"
+      runtime: "python3.9"
