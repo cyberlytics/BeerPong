@@ -42,11 +42,9 @@ def test_beerpongo_dynamo_db_games_table(template: Template):
             "TableName": "BeerpongoGamesTable",
             "AttributeDefinitions": [
                 {"AttributeName": "GameId", "AttributeType": "S"},
-                {"AttributeName": "StartTime", "AttributeType": "N"},
             ],
             "KeySchema": [
                 {"AttributeName": "GameId", "KeyType": "HASH"},
-                {"AttributeName": "StartTime", "KeyType": "RANGE"},
             ],
         },
     )
