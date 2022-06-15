@@ -44,7 +44,12 @@ def test_post(dynamodb):
     create_games_table(dynamodb)
 
     test_game_id = 'GAME_ID'
-    response = post(table=table_name, game_id=test_game_id)
+    event = {
+        "TableName": table_name,
+        "GameId": test_game_id
+    }
+
+    response = post(event, {})
 
     # assert response
     assert response == {"statusCode": "200", "body": ANY}
@@ -70,7 +75,12 @@ def test_post_existing_game_id_fails(dynamodb):
     existing_item = {"GameId": existing_game_id, "State": "EXISTING_STATE"}
     table.put_item(Item=existing_item)
 
-    response = post(table=table_name, game_id=existing_game_id)
+    event = {
+        "TableName": table_name,
+        "GameId": existing_game_id
+    }
+
+    response = post(event, {})
 
     # assert response
     assert response == {"statusCode": "500"}
