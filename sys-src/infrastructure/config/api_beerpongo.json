@@ -145,12 +145,12 @@
     "Game": {
       "type": "object",
       "properties": {
-        "id": {
+        "GameId": {
           "type": "integer",
           "format": "int8",
           "description": "id of the game"
         },
-        "state": {
+        "State": {
           "type": "string",
           "description": "current state of the game in the form \"[ID]:[0-9, X],[ID]:[0-9, X],[ID]:[0-9, X],[ID]:[0-9, X],[ID]:[0-9, X];\""
         }
@@ -159,12 +159,12 @@
     "GameUpdate": {
       "type": "object",
       "properties": {
-        "id": {
+        "GameId": {
           "type": "integer",
           "format": "int8",
           "description": "id of the game"
         },
-        "state": {
+        "State": {
           "type": "string",
           "description": "[0-9, X]"
         }
