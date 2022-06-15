@@ -164,12 +164,12 @@ def test_beerpongo_api_gateway_stack(
                     "Game": {
                         "type": "object",
                         "properties": {
-                            "id": {
+                            "GameId": {
                                 "type": "integer",
                                 "format": "int8",
                                 "description": "id of the game",
                             },
-                            "state": {
+                            "State": {
                                 "type": "string",
                                 "description": "current state of the "
                                 "game in the form \"["
@@ -183,12 +183,12 @@ def test_beerpongo_api_gateway_stack(
                     "GameUpdate": {
                         "type": "object",
                         "properties": {
-                            "id": {
+                            "GameId": {
                                 "type": "integer",
                                 "format": "int8",
                                 "description": "id of the game",
                             },
-                            "state": {
+                            "State": {
                                 "type": "string",
                                 "description": "[0-9, X]",
                             },
