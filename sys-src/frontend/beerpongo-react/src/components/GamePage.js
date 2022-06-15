@@ -2,8 +2,16 @@ import { GameConnectionController } from "../model/GameConnectionController";
 import {useParams, useNavigate} from "react-router-dom";
 import Field from "./Field";
 
+function reload() {
+    window.location.reload()
+}
+
 //missing CSS
 function GamePage() {
+
+    let refreshPage = window.setInterval(function(){
+        reload();
+    }, 5000);
 
     const {id} = useParams();
     const navigate = useNavigate();
