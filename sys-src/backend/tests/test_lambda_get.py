@@ -1,4 +1,4 @@
-from get_lambda.lambda_get import lambda_get
+from get_lambda.lambda_get import get
 import boto3
 import os
 import pytest
@@ -45,14 +45,14 @@ def test_get_lambda():
     )
 
     # test if the right game state is returned
-    event = {"id": "1", "state": "1:X"}
-    resp = lambda_get(event, "test_table")
+    event = {"GameId": "1", "TableName": table_name}
+    resp = get(event, "test_table")
 
     assert resp["statusCode"] == "200"
-    assert resp["body"]["state"] == "1:X,2:32"
+    assert resp["body"]["State"] == "1:X,2:32"
 
     # test if the right error ist returned, if the gameID does not exist
-    event = {"id": "a", "state": "1:X"}
-    resp = lambda_get(event, "test_table")
+    event = {"GameId": "a", "TableName": table_name}
+    resp = get(event, "test_table")
 
     assert resp["statusCode"] == "404"
