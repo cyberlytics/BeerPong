@@ -7,6 +7,8 @@ import boto3
 
 alphabet = string.ascii_letters + string.digits
 
+table_name = "gamesTable"
+
 
 def generate_game_id():
     """
@@ -15,7 +17,7 @@ def generate_game_id():
     return "".join(random.choices(alphabet, k=8))
 
 
-def post(table="gamesTable", game_id=generate_game_id()):
+def post(event, context):
     """
     Creates and puts a new Game item into dynamodb table.
     Requires a role with write access to DynamoDB.
@@ -23,13 +25,25 @@ def post(table="gamesTable", game_id=generate_game_id()):
     The Game id is a randomly generated 8 character string.
     The initial Game state is set as an empty string
 
-    :param:  table: the dynamodb table name with default value "gamesTable"
+    :param:  event: the lambda call event containing all given parameters
+    :param:  context: the lambda call context
     :return: response: JSON with http Status Code
             200	Create ok
             500 Error creating the Game item
     """
+    global table_name
 
-    table = boto3.resource("dynamodb").Table(table)
+    # set table name if present
+    if "TableName" in event:
+        table_name = event["TableName"]
+
+    # set game id if present, else generate one
+    if "GameId" in event:
+        game_id = event["GameId"]
+    else:
+        game_id = generate_game_id()
+
+    table = boto3.resource("dynamodb").Table(table_name)
 
     try:
         # check if game item with given id already exists
