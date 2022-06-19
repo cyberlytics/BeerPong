@@ -11,7 +11,7 @@ function GamePage() {
 
     let refreshPage = window.setInterval(function(){
         reload();
-    }, 5000);
+    }, 10000);
 
     const {id} = useParams();
     const navigate = useNavigate();
