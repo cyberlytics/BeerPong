@@ -3,6 +3,7 @@ import json
 from aws_cdk import Stack
 from aws_cdk import aws_apigateway as apigateway
 from constructs import Construct
+from aws_cdk.aws_iam import PolicyDocument, PolicyStatement
 
 
 class BeerpongoAPIGatewayStack(Stack):
@@ -49,4 +50,11 @@ class BeerpongoAPIGatewayStack(Stack):
             api_definition=apigateway.ApiDefinition.from_inline(
                 json.loads(newdata)
             ),
+            policy=PolicyDocument(
+                statements=[
+                    PolicyStatement(
+                        actions=["lambda:InvokeFunctions"],
+                        resources=["*"]
+                    )]
+            )
         )
