@@ -39,6 +39,11 @@
     background-color: red;
 }
 
+.cup1_unselected_clicked {
+    border: 3px solid #fbbebe;
+    background-color: red;
+}
+
 .cup1_selected{
     border: 3px solid red;
     background-color: #000000;
@@ -56,6 +61,11 @@
 }
 
 .cup2_unselected:hover {
+    border: 3px solid #a0b1ff;
+    background-color: blue;
+}
+
+.cup2_unselected_clicked {
     border: 3px solid #a0b1ff;
     background-color: blue;
 }
