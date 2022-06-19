@@ -6,21 +6,22 @@ import {GameConnectionController} from "../model/GameConnectionController";
 
 class GamePage extends React.Component{
 
-    constructor(props) {
-        super(props);
-        if (! 'gameID' in props){
-            throw Error("Missing parameter for GameID");
-        }
-        if(!'userID' in props){
+
+    componentDidMount() {
+        if(this.props.match == null)
+            return;
+
+        if(! ('userID' in this.props.match)){
             throw Error("Missing parameter for UserID");
         }
-        this.state = {
-            gameID: props.gameID,
-            userID: props.userID,
+        let newState = {
+            gameID: 0,
+            userID: this.props.userID,
             updateString: "",
-            gameString: GameConnectionController.tryGettingGame(props.gameID),
+            gameString: GameConnectionController.tryGettingGame(this.props.gameID),
             activePlayer: false
         };
+        this.setState(newState);
         // Restore the default form of the updateString
         this.resetUpdateString();
 
@@ -28,11 +29,16 @@ class GamePage extends React.Component{
         // now we have the gameString and can determine weather we are the active player or not
         let splits = this.state.gameString.split(',');
         if(splits[splits.length - 1].startsWith(this.state.userID)){
-            this.state.activePlayer = true;
+            let stateCopy = this.state;
+            stateCopy.activePlayer = true;
+            this.setState(stateCopy);
         }
-    }
 
-    componentDidMount() {
+        const {id} = this.props.params;
+        let stateCopy = this.state;
+        stateCopy.id = id;
+        this.setState(stateCopy);
+
         this.timerID = setInterval(
             () => this.tick(),
             10000
@@ -77,6 +83,14 @@ class GamePage extends React.Component{
 
     render() {
         // Build up the default dictionary
+        // decide if we are here on a valid route -> we came from a link!
+        if (this.state == null){
+            return (
+                <div>
+                    <p>Use the Button "Join" and do not enter the url for a specific game!</p>
+                </div>
+            )
+        }
         let dict = {
             // Classnames
             "p1_0_className": "cup1_unselected",

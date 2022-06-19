@@ -41,4 +41,8 @@ export class GameConnectionController {
     })
   }
 
+  static tryJoiningGame(gameId){
+    throw Error("Not implemented!");
+  }
+
 }
