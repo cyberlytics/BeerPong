@@ -3,17 +3,16 @@ import json
 from aws_cdk import Stack
 from aws_cdk import aws_apigateway as apigateway
 from constructs import Construct
-from aws_cdk.aws_iam import PolicyDocument, PolicyStatement
 
 
 class BeerpongoAPIGatewayStack(Stack):
     def __init__(
-        self,
-        scope: Construct,
-        construct_id: str,
-        config: dict,
-        LambdaInfo: dict,
-        **kwargs
+            self,
+            scope: Construct,
+            construct_id: str,
+            config: dict,
+            LambdaInfo: dict,
+            **kwargs
     ) -> None:
         super().__init__(scope, construct_id, **kwargs)
 
@@ -34,8 +33,8 @@ class BeerpongoAPIGatewayStack(Stack):
 
         newdata = (
             filedata.replace(ARN_GAME_POST, LambdaInfo["post_LambdaName"])
-            .replace(ARN_GAME_PUT, LambdaInfo["put_LambdaName"])
-            .replace(ARN_GAME_GET, LambdaInfo["get_LambdaName"])
+                .replace(ARN_GAME_PUT, LambdaInfo["put_LambdaName"])
+                .replace(ARN_GAME_GET, LambdaInfo["get_LambdaName"])
         )
 
         # We save the file under a different name
@@ -49,12 +48,5 @@ class BeerpongoAPIGatewayStack(Stack):
             id=apiId,
             api_definition=apigateway.ApiDefinition.from_inline(
                 json.loads(newdata)
-            ),
-            policy=PolicyDocument(
-                statements=[
-                    PolicyStatement(
-                        actions=["lambda:InvokeFunctions"],
-                        resources=["*"]
-                    )]
             )
         )

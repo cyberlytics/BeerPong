@@ -96,7 +96,7 @@
         }
       }
     },
-    "/game/{gameId}": {
+    "/game/{GameId}": {
       "get": {
         "tags": [
           "Game"
