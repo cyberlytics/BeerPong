@@ -51,13 +51,4 @@ class BeerpongoAPIGatewayStack(Stack):
             api_definition=apigateway.ApiDefinition.from_inline(
                 json.loads(newdata)
             ),
-            policy=PolicyDocument(
-                statements=[
-                    PolicyStatement(
-                        actions=["lambda:InvokeFunctions"],
-                        resources=["*"],
-                        principals=[ServicePrincipal('apigateway.amazonaws.com')],
-                    )],
-                
-            )
         )
