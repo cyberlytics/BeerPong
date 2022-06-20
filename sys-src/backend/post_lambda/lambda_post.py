@@ -2,13 +2,14 @@ import json
 import logging
 import random
 import string
+import os
 
 import boto3
 
 alphabet = string.ascii_letters + string.digits
 
-table_name = "gamesTable"
 
+table_name = os.environ['DB_TABLE']
 
 def generate_game_id():
     """
@@ -33,9 +34,6 @@ def post(event, context):
     """
     global table_name
 
-    # set table name if present
-    if "TableName" in event:
-        table_name = event["TableName"]
 
     # set game id if present, else generate one
     if "GameId" in event:
