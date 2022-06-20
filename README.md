@@ -5,6 +5,8 @@
 - aws cli (https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
 - aws-cdk (npm install -g aws-cdk)
 - aws-cdk profile: Add following to ~/.aws/config
+- Node.js (https://nodejs.org/)
+- Docker (Windows: https://docs.docker.com/desktop/windows/install/)
 
   ```
   [profile bierpongo-user]
@@ -37,6 +39,7 @@ Install pipenv dependencies:
 make install
 make install-infrastructure
 make install-backend
+make install-frontend
 ```
 
 
@@ -46,18 +49,37 @@ Run unit tests:
 make test
 make test-infrastructure
 make test-backend
+make test-frontend
+```
+
+
+## Test Coverage
+Run unit tests:
+```
+make test-coverage
+make test-coverage-infrastructure
+make test-coverage-backend
+make test-coverage-frontend
 ```
 
 
 ## Deploy
+Deploy infrastructure stacks to AWS and build frontend docker container:
+- `env`: The deployment environment. The name of a yaml file in the config folder, e.g. `dev` or `prod`.
+- `deployment-profile`: The deployment profile, which links to a user. Like above use `bierpongo-user`.
+- `stack_id`: The id of the stack you want to deploy. For a deployment of all stacks use `--all`.
+```
+make deployPROFILE=<deployment-profile> STACK=<stack_id> CONFIG=<env>
+```
 Deploy infrastructure stacks to AWS:
 ```
 make deploy-infrastructure PROFILE=<deployment-profile> STACK=<stack_id> CONFIG=<env>
 ```
+Build frontend docker container:
+```
+make build-docker-frontend
+```
 
-- `env`: The deployment environment. The name of a yaml file in the config folder, e.g. `dev` or `prod`.
-- `deployment-profile`: The deployment profile, which links to a user. Like above use `bierpongo-user`.
-- `stack_id`: The id of the stack you want to deploy. For a deployment of all stacks use `--all`.
 
 
 Destroy deployed infrastructure stacks in AWS:
