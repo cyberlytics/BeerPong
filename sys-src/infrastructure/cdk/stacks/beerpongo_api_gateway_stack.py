@@ -33,8 +33,8 @@ class BeerpongoAPIGatewayStack(Stack):
 
         newdata = (
             filedata.replace(ARN_GAME_POST, LambdaInfo["post_LambdaName"])
-                .replace(ARN_GAME_PUT, LambdaInfo["put_LambdaName"])
-                .replace(ARN_GAME_GET, LambdaInfo["get_LambdaName"])
+                    .replace(ARN_GAME_PUT, LambdaInfo["put_LambdaName"])
+                    .replace(ARN_GAME_GET, LambdaInfo["get_LambdaName"])
         )
 
         # We save the file under a different name
