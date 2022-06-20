@@ -1,7 +1,7 @@
 import aws_cdk.aws_lambda as lambda_
 from aws_cdk import Stack
 from constructs import Construct
-from aws_cdk.aws_iam import PolicyStatement
+from aws_cdk.aws_iam import PolicyStatement, ServicePrincipal
 
 
 class BeerpongoLambdaStack(Stack):
@@ -57,3 +57,21 @@ class BeerpongoLambdaStack(Stack):
             actions=["dynamodb:GetItem", "dynamodb:PutItem"],
             resources=["*"]
         ))
+
+        self.lambda_get.add_permission(
+            principal=ServicePrincipal('apigateway.amazonaws.com'),
+            action='lambda:InvokeFunction',
+            id="apigateway-get-permission"
+        )
+
+        self.lambda_post.add_permission(
+            principal=ServicePrincipal('apigateway.amazonaws.com'),
+            action='lambda:InvokeFunction',
+            id="apigateway-post-permission"
+        )
+
+        self.lambda_put.add_permission(
+            principal=ServicePrincipal('apigateway.amazonaws.com'),
+            action='lambda:InvokeFunction',
+            id="apigateway-put-permission"
+        )

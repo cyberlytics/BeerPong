@@ -114,14 +114,18 @@ def test_beerpongo_api_gateway_stack(
                                 "uri": "arn:${AWS::Partition}:apigateway:${"
                                 "AWS::Region}:lambda:path/2015-03-31"
                                 "/functions/put_LambdaName/invocations",
-                                "responses": {"default": {"statusCode": "200"}},
+                                "responses": {
+                                    "default": {
+                                        "statusCode": "200"
+                                    }
+                                },
                                 "passthroughBehavior": "when_no_match",
                                 "contentHandling": "CONVERT_TO_TEXT",
                                 "type": "aws",
                             },
                         }
                     },
-                    "/game/{gameId}": {
+                    "/game/{GameId}": {
                         "get": {
                             "tags": ["Game"],
                             "summary": "Get an existing game",
