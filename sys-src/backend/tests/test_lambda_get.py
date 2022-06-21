@@ -18,7 +18,7 @@ def aws_credentials():
 
 
 @mock_dynamodb
-def test_get_lambda():
+def test_get_lambda(aws_credentials):
     # creating test_table
     
     os.environ['DB_TABLE'] = table_name

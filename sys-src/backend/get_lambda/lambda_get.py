@@ -6,8 +6,8 @@ import os
 def get(event, context):
     """
     Provide an event, that contains the following keys:
-        - id
-        - state in the form '[ID]:[0-9, X],[ID]:[0-9, X],[ID]:[0-9, X],[ID]:[0-9, X],[ID]:[0-9, X]'
+        - GameId
+        - State in the form '[ID]:[0-9, X],[ID]:[0-9, X],[ID]:[0-9, X],[ID]:[0-9, X],[ID]:[0-9, X]'
 
     Requires a role with reading access to DynamoDB.
 
@@ -17,6 +17,7 @@ def get(event, context):
             with the gameID and the current state of the game
     """
     table_name = os.environ['DB_TABLE']
+
 
 
     # Defining access to database
