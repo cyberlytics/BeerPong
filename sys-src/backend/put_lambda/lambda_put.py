@@ -1,8 +1,8 @@
 import json
 import boto3
+import os
 
-table_name = "BeerpongoDevGamesTable"
-
+table_name = os.environ['DB_TABLE']
 
 def put(event, context):
     """
