@@ -31,8 +31,7 @@ def post(event, context):
             500 Error creating the Game item
     """
     table_name = os.environ['DB_TABLE']
-
-
+    
     # set game id if present, else generate one
     if "GameId" in event:
         game_id = event["GameId"]
