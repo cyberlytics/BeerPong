@@ -1,6 +1,7 @@
 import boto3
+import os
 
-table_name = "gamesTable"
+table_name = os.environ['DB_TABLE']
 
 
 def get(event, context):
@@ -18,9 +19,6 @@ def get(event, context):
     """
     global table_name
 
-    # set table name if present
-    if "TableName" in event:
-        table_name = event["TableName"]
 
     # Defining access to database
     res = boto3.resource("dynamodb")
