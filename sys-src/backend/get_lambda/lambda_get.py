@@ -25,7 +25,7 @@ def get(event, context):
     table = res.Table(table_name)
 
     # Getting item for id given by the event
-    item_id = event['GameId']
+    item_id = event['params']['path']['GameId']
 
     data = table.get_item(
         Key={
