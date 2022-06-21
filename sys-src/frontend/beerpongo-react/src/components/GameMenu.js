@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { GameConnectionController } from "../model/GameConnectionController";
+import {Link} from "react-router-dom";
 
 
 
@@ -20,13 +21,12 @@ function GameMenu() {
                     onChange={(e) => {
                         setInput(e.target.value)}}>
                  </input>
-                <button 
-                    onClick={() => {
-                        playerid = GameConnectionController.tryJoiningGame(input);
-                        navigate("/game/" + input);
-                        }}>
+                <Link to={`game/${input}`} state={{userID: 0}}>
+                    <span onClick={() => {
+                        GameConnectionController.tryJoiningGame(input)}}>
                     Join Game
-                </button>
+                    </span>
+                </Link>
             </div> 
 
 

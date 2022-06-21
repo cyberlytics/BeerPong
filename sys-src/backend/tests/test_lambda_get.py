@@ -1,4 +1,4 @@
-from get_lambda.lambda_get import lambda_get
+from get_lambda.lambda_get import get
 import boto3
 import os
 import pytest
@@ -18,8 +18,10 @@ def aws_credentials():
 
 
 @mock_dynamodb
-def test_get_lambda():
+def test_get_lambda(aws_credentials):
     # creating test_table
+    
+    os.environ['DB_TABLE'] = table_name
     dynamodb = boto3.client("dynamodb")
     dynamodb.create_table(
         TableName=table_name,
@@ -45,14 +47,14 @@ def test_get_lambda():
     )
 
     # test if the right game state is returned
-    event = {"id": "1", "state": "1:X"}
-    resp = lambda_get(event, "test_table")
+    event = {"params": {"path": {"GameId" : "1"}}}
+    resp = get(event, {})
 
-    assert resp["statusCode"] == "200"
-    assert resp["body"]["state"] == "1:X,2:32"
+    assert resp["statusCode"] == 200
+    assert resp["body"]["State"] == "1:X,2:32"
 
     # test if the right error ist returned, if the gameID does not exist
-    event = {"id": "a", "state": "1:X"}
-    resp = lambda_get(event, "test_table")
+    event = {"params": {"path": {"GameId" : "a"}}}
+    resp = get(event, {})
 
-    assert resp["statusCode"] == "404"
+    assert resp["statusCode"] == 404
