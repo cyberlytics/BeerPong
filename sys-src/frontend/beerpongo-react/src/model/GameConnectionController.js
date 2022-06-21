@@ -4,7 +4,6 @@ import {GET_GAME_URL, POST_GAME_URL, PUT_GAME_URL, JOIN_GAME_URL} from "../const
 export class GameConnectionController {
 
   static tryCreatingGame() {
-    return 3;
     axios.post(POST_GAME_URL).then(response => {
       console.log(response);
     }).catch(err => {
@@ -14,12 +13,11 @@ export class GameConnectionController {
   }
 
   static tryJoiningGame(gameId) {
-    return 2;
     const url = JOIN_GAME_URL.replace("{GAME_ID}", gameId)
     axios.get(url)
       .then(response => {
         console.log(response);
-        return response.body.id;
+        return response.data;
       }).catch(err => {
       // Todo
       console.error(err)
