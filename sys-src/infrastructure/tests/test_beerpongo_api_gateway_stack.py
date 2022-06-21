@@ -50,7 +50,7 @@ def test_beerpongo_api_gateway_stack(
                 "swagger": "2.0",
                 "info": {
                     "description": "API for Beerpongo",
-                    "version": "0.1.0",
+                    "version": "1.0.0",
                     "title": "Beerpongo",
                 },
                 "tags": [
@@ -79,7 +79,7 @@ def test_beerpongo_api_gateway_stack(
                                 "-31/functions/post_LambdaName"
                                 "/invocations",
                                 "responses": {
-                                    "default": {"statusCode": "200"}
+                                    "default": {"statusCode": 200}
                                 },
                                 "passthroughBehavior": "when_no_match",
                                 "contentHandling": "CONVERT_TO_TEXT",
@@ -97,8 +97,7 @@ def test_beerpongo_api_gateway_stack(
                                 {
                                     "in": "body",
                                     "name": "body",
-                                    "description": "Game-object tha needs to "
-                                    "be updated.",
+                                    "description": "Game-object that needs to be updated.",
                                     "required": True,
                                     "schema": {"$ref": "#/definitions"
                                                        "/GameUpdate"},
@@ -107,7 +106,7 @@ def test_beerpongo_api_gateway_stack(
                             "responses": {
                                 "200": {"description": "Update ok"},
                                 "400": {"description": "Invalid ID supplied"},
-                                "404": {"description": "Game not found"},
+                                "500": {"description": "Error updating Game state"},
                             },
                             "x-amazon-apigateway-integration": {
                                 "httpMethod": "POST",
@@ -134,7 +133,7 @@ def test_beerpongo_api_gateway_stack(
                             "parameters": [
                                 {
                                     "in": "path",
-                                    "name": "gameId",
+                                    "name": "GameId",
                                     "required": True,
                                     "type": "integer",
                                     "format": "int8",
@@ -155,7 +154,7 @@ def test_beerpongo_api_gateway_stack(
                                 "-31/functions/get_LambdaName"
                                 "/invocations",
                                 "responses": {
-                                    "default": {"statusCode": "200"}
+                                    "default": {"statusCode": 200}
                                 },
                                 "passthroughBehavior": "when_no_match",
                                 "contentHandling": "CONVERT_TO_TEXT",
@@ -175,12 +174,7 @@ def test_beerpongo_api_gateway_stack(
                             },
                             "State": {
                                 "type": "string",
-                                "description": "current state of the "
-                                "game in the form \"["
-                                "ID]:[0-9, X],[ID]:[0-9, "
-                                "X],[ID]:[0-9, X],"
-                                "[ID]:[0-9, X],[ID]:[0-9, "
-                                "X];\"",
+                                "description": "current state of the game in the form \"[ID]:[0-9, X],[ID]:[0-9, X],[ID]:[0-9, X],[ID]:[0-9, X],[ID]:[0-9, X]\"",
                             },
                         },
                     },
