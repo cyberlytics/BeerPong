@@ -1,7 +1,6 @@
 import boto3
 import os
 
-table_name = os.environ['DB_TABLE']
 
 
 def get(event, context):
