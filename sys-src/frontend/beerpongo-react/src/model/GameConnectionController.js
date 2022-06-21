@@ -19,9 +19,9 @@ export class GameConnectionController {
         console.log(response);
         return response.data;
       }).catch(err => {
-      // Todo
-      console.error(err)
-    })
+      console.error(err);
+      throw Error("Trying to join game with Id: " + gameId + "failed!");
+        })
   }
 
   static tryUpdatingGame(gameUpdate) {
