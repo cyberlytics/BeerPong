@@ -48,11 +48,11 @@ def test_get_lambda():
     event = {"GameId": "1", "TableName": table_name}
     resp = get(event, "test_table")
 
-    assert resp["statusCode"] == "200"
+    assert resp["statusCode"] == 200
     assert resp["body"]["State"] == "1:X,2:32"
 
     # test if the right error ist returned, if the gameID does not exist
     event = {"GameId": "a", "TableName": table_name}
     resp = get(event, "test_table")
 
-    assert resp["statusCode"] == "404"
+    assert resp["statusCode"] == 404
