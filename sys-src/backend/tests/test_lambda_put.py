@@ -19,6 +19,8 @@ def aws_credentials():
 
 @mock_dynamodb
 def test_put_lambda(aws_credentials):
+    
+    os.environ['DB_TABLE'] = table_name
     dynamodb = boto3.client('dynamodb')
     dynamodb.create_table(
         TableName=table_name,
@@ -51,7 +53,6 @@ def test_put_lambda(aws_credentials):
     event = {
         "GameId": "1",
         "State": p1_state,
-        "TableName": table_name
     }
     response = put(event, {})
     assert response == {'statusCode': 200, 'body': '{"message": "Game State of Game 1 updated"}'}

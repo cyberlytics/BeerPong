@@ -1,14 +1,13 @@
 import boto3
 import os
 
-table_name = os.environ['DB_TABLE']
 
 
 def get(event, context):
     """
     Provide an event, that contains the following keys:
-        - id
-        - state in the form '[ID]:[0-9, X],[ID]:[0-9, X],[ID]:[0-9, X],[ID]:[0-9, X],[ID]:[0-9, X];'
+        - GameId
+        - State in the form '[ID]:[0-9, X],[ID]:[0-9, X],[ID]:[0-9, X],[ID]:[0-9, X],[ID]:[0-9, X]'
 
     Requires a role with reading access to DynamoDB.
 
@@ -17,7 +16,8 @@ def get(event, context):
     :return response: JSON containing a statusCode and the body
             with the gameID and the current state of the game
     """
-    global table_name
+    table_name = os.environ['DB_TABLE']
+
 
 
     # Defining access to database

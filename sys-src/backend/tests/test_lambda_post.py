@@ -22,7 +22,7 @@ def aws_credentials():
 
 
 @pytest.fixture
-def dynamodb():
+def dynamodb(aws_credentials):
     yield boto3.resource('dynamodb')
 
 
@@ -41,6 +41,8 @@ def create_games_table(dynamodb):
 
 @mock_dynamodb
 def test_post(dynamodb):
+    
+    os.environ['DB_TABLE'] = table_name
     create_games_table(dynamodb)
 
     test_game_id = 'GAME_ID'
@@ -76,7 +78,6 @@ def test_post_existing_game_id_fails(dynamodb):
     table.put_item(Item=existing_item)
 
     event = {
-        "TableName": table_name,
         "GameId": existing_game_id
     }
 
