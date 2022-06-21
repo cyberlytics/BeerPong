@@ -22,7 +22,7 @@ def aws_credentials():
 
 
 @pytest.fixture
-def dynamodb():
+def dynamodb(aws_credentials):
     yield boto3.resource('dynamodb')
 
 
