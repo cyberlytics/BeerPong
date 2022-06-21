@@ -2,16 +2,7 @@ import axios from 'axios'
 import {GET_GAME_URL, POST_GAME_URL, PUT_GAME_URL, JOIN_GAME_URL} from "../constants/BackendUrl";
 
 export class GameConnectionController {
-
-  static tryCreatingGame() {
-    axios.post(POST_GAME_URL).then(response => {
-      console.log(response);
-    }).catch(err => {
-      // Todo
-      console.error(err)
-    })
-  }
-
+  
   static tryJoiningGame(gameId) {
     const url = JOIN_GAME_URL.replace("{GAME_ID}", gameId)
     axios.get(url)
@@ -23,32 +14,5 @@ export class GameConnectionController {
       throw Error("Trying to join game with Id: " + gameId + "failed!");
         })
   }
-
-  static tryUpdatingGame(gameUpdate) {
-    axios.put(PUT_GAME_URL, gameUpdate)
-      .then(data => {
-        // Todo
-        console.log(data);
-      }).catch(err => {
-      // Todo
-      console.error(err)
-    })
-
-
-        throw new Error("Not implemented!");
-    }
-
-    static tryGettingGame(id){
-        // TODO: Replace with real implementation
-        console.log("Called tryGettingGame");
-        return "2:0X,1:5X,1:2X,1:4X,2:7X";
-        // throw new Error("Not implemented!");
-    }
-
-    static tryUpdateGame(id, playerId, cupNr){
-        // TODO: Replace with real implementation
-        console.log("Called tryUpdateGame");
-        // throw new Error("Not implemented!");
-    }
 
 }
