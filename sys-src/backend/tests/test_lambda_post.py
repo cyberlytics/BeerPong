@@ -41,6 +41,7 @@ def create_games_table(dynamodb):
 
 @mock_dynamodb
 def test_post(dynamodb):
+    os.environ['DB_TABLE'] = table_name
     create_games_table(dynamodb)
 
     test_game_id = 'GAME_ID'

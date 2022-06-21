@@ -9,8 +9,6 @@ import boto3
 alphabet = string.ascii_letters + string.digits
 
 
-table_name = os.environ['DB_TABLE']
-
 def generate_game_id():
     """
     :return: a randomly generated game id string with 8 characters
@@ -32,7 +30,7 @@ def post(event, context):
             200	Create ok
             500 Error creating the Game item
     """
-    global table_name
+    table_name = os.environ['DB_TABLE']
 
 
     # set game id if present, else generate one

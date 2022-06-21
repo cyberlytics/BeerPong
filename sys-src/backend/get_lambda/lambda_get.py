@@ -17,7 +17,7 @@ def get(event, context):
     :return response: JSON containing a statusCode and the body
             with the gameID and the current state of the game
     """
-    global table_name
+    table_name = os.environ['DB_TABLE']
 
 
     # Defining access to database

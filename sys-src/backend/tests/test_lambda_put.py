@@ -19,6 +19,7 @@ def aws_credentials():
 
 @mock_dynamodb
 def test_put_lambda(aws_credentials):
+    os.environ['DB_TABLE'] = table_name
     dynamodb = boto3.client('dynamodb')
     dynamodb.create_table(
         TableName=table_name,
