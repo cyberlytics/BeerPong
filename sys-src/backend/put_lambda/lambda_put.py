@@ -2,7 +2,7 @@ import json
 import boto3
 import os
 
-table_name = os.environ['DB_TABLE']
+
 
 def put(event, context):
     """
@@ -20,7 +20,7 @@ def put(event, context):
             400	Invalid ID supplied
             500 Error updating game state
     """
-    global table_name
+    table_name = os.environ['DB_TABLE']
 
     id = event.get("GameId")
     state = event.get("State")
