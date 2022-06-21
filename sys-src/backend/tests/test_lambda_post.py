@@ -54,7 +54,7 @@ def test_post(dynamodb):
     response = post(event, {})
 
     # assert response
-    assert response == {"statusCode": "200", "body": ANY}
+    assert response == {"statusCode": 200, "body": ANY}
 
     body = json.loads(response["body"])
     assert len(body) == 2
@@ -84,7 +84,7 @@ def test_post_existing_game_id_fails(dynamodb):
     response = post(event, {})
 
     # assert response
-    assert response == {"statusCode": "500"}
+    assert response == {"statusCode": 500}
 
     # assert existing game item in dynamodb
     data = table.scan()

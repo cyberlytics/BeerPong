@@ -50,11 +50,11 @@ def test_get_lambda(aws_credentials):
     event = {"params": {"path": {"GameId" : "1"}}}
     resp = get(event, {})
 
-    assert resp["statusCode"] == "200"
+    assert resp["statusCode"] == 200
     assert resp["body"]["State"] == "1:X,2:32"
 
     # test if the right error ist returned, if the gameID does not exist
     event = {"params": {"path": {"GameId" : "a"}}}
     resp = get(event, {})
 
-    assert resp["statusCode"] == "404"
+    assert resp["statusCode"] == 404

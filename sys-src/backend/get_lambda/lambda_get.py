@@ -36,10 +36,10 @@ def get(event, context):
     try:
         item = data['Item']
     except KeyError:
-        return {"statusCode": "404"}
+        return {"statusCode": 404}
 
     response = {
-        "statusCode": "200",
+        "statusCode": 200,
         "body": item
     }
 
