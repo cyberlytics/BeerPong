@@ -47,14 +47,14 @@ def test_get_lambda(aws_credentials):
     )
 
     # test if the right game state is returned
-    event = {"GameId": "1"}
+    event = {"params": {"path": {"GameId" : "1"}}}
     resp = get(event, {})
 
     assert resp["statusCode"] == "200"
     assert resp["body"]["State"] == "1:X,2:32"
 
     # test if the right error ist returned, if the gameID does not exist
-    event = {"GameId": "a"}
-    resp = get(event)
+    event = {"params": {"path": {"GameId" : "a"}}}
+    resp = get(event, {})
 
     assert resp["statusCode"] == "404"
