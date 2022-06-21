@@ -54,8 +54,14 @@ def put(event, context):
     except:
         return {'statusCode': 500, 'exception': "Error updating Game"}
 
+    # get length of state
+    len_state = len(item['State'])
+
     # update state string
-    item['State'] += "," + state
+    if (len_state == 0):
+        item['State'] += state
+    else:
+        item['State'] += "," + state
 
     # put item back into database
     try:
