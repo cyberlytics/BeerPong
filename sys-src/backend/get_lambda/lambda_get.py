@@ -1,7 +1,6 @@
 import boto3
 
-table_name = "gamesTable"
-
+table_name = "BeerpongoDevGamesTable"
 
 def get(event, context):
     """
@@ -18,16 +17,12 @@ def get(event, context):
     """
     global table_name
 
-    # set table name if present
-    if "TableName" in event:
-        table_name = event["TableName"]
-
     # Defining access to database
     res = boto3.resource("dynamodb")
     table = res.Table(table_name)
 
     # Getting item for id given by the event
-    item_id = event['GameId']
+    item_id = event['params']['path']['GameId']
 
     data = table.get_item(
         Key={
