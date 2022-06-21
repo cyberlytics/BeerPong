@@ -1,6 +1,8 @@
 import boto3
+import os
 
-table_name = "BeerpongoDevGamesTable"
+table_name = os.environ['DB_TABLE']
+
 
 def get(event, context):
     """
@@ -16,6 +18,7 @@ def get(event, context):
             with the gameID and the current state of the game
     """
     global table_name
+
 
     # Defining access to database
     res = boto3.resource("dynamodb")

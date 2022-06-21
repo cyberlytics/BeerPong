@@ -1,8 +1,8 @@
 import json
 import boto3
+import os
 
-table_name = "gamesTable"
-
+table_name = os.environ['DB_TABLE']
 
 def put(event, context):
     """
@@ -24,10 +24,6 @@ def put(event, context):
 
     id = event.get("GameId")
     state = event.get("State")
-
-    # set table name if present
-    if "TableName" in event:
-        table_name = event["TableName"]
 
     # Define access to db
     table = boto3.resource("dynamodb").Table(table_name)
@@ -58,8 +54,14 @@ def put(event, context):
     except:
         return {'statusCode': 500, 'exception': "Error updating Game"}
 
+    # get length of state
+    len_state = len(item['State'])
+
     # update state string
-    item['State'] += "," + state
+    if (len_state == 0):
+        item['State'] += state
+    else:
+        item['State'] += "," + state
 
     # put item back into database
     try:
