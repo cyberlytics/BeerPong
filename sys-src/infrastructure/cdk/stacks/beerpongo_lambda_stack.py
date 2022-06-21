@@ -25,7 +25,7 @@ class BeerpongoLambdaStack(Stack):
             runtime=lambda_.Runtime(post_config["runtime"]),
             handler=post_config["handler"],
             code=lambda_.Code.from_asset(post_config["code"]),
-            nvironment={ "DB_TABLE" : games_table_config["tableName"]}
+            environment={ "DB_TABLE" : games_table_config["tableName"]}
         )
 
         self.lambda_get = lambda_.Function(
