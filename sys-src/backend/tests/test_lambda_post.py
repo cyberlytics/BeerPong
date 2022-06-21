@@ -41,6 +41,7 @@ def create_games_table(dynamodb):
 
 @mock_dynamodb
 def test_post(dynamodb):
+    
     os.environ['DB_TABLE'] = table_name
     create_games_table(dynamodb)
 
@@ -77,7 +78,6 @@ def test_post_existing_game_id_fails(dynamodb):
     table.put_item(Item=existing_item)
 
     event = {
-        "TableName": table_name,
         "GameId": existing_game_id
     }
 

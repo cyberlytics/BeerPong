@@ -7,7 +7,7 @@ def get(event, context):
     """
     Provide an event, that contains the following keys:
         - id
-        - state in the form '[ID]:[0-9, X],[ID]:[0-9, X],[ID]:[0-9, X],[ID]:[0-9, X],[ID]:[0-9, X];'
+        - state in the form '[ID]:[0-9, X],[ID]:[0-9, X],[ID]:[0-9, X],[ID]:[0-9, X],[ID]:[0-9, X]'
 
     Requires a role with reading access to DynamoDB.
 

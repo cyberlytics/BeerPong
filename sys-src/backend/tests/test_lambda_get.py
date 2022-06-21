@@ -20,6 +20,7 @@ def aws_credentials():
 @mock_dynamodb
 def test_get_lambda():
     # creating test_table
+    
     os.environ['DB_TABLE'] = table_name
     dynamodb = boto3.client("dynamodb")
     dynamodb.create_table(
@@ -46,14 +47,14 @@ def test_get_lambda():
     )
 
     # test if the right game state is returned
-    event = {"GameId": "1", "TableName": table_name}
-    resp = get(event, "test_table")
+    event = {"GameId": "1"}
+    resp = get(event, {})
 
     assert resp["statusCode"] == "200"
     assert resp["body"]["State"] == "1:X,2:32"
 
     # test if the right error ist returned, if the gameID does not exist
-    event = {"GameId": "a", "TableName": table_name}
-    resp = get(event, "test_table")
+    event = {"GameId": "a"}
+    resp = get(event)
 
     assert resp["statusCode"] == "404"
