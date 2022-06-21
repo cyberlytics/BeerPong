@@ -1,7 +1,19 @@
 import axios from 'axios'
-import {GET_GAME_URL, POST_GAME_URL, PUT_GAME_URL} from "../constants/BackendUrl";
+import {GET_GAME_URL, POST_GAME_URL, PUT_GAME_URL, JOIN_GAME_URL} from "../constants/BackendUrl";
 
 export class GameConnectionController {
+
+  static tryJoiningGame(gameId) {
+    const url = JOIN_GAME_URL.replace("{GAME_ID}", gameId)
+    axios.get(url)
+      .then(response => {
+        console.log("Try joining Game received: ", response);
+        return response.data;
+      }).catch(err => {
+      console.error(err);
+      throw Error("Trying to join game with Id: " + gameId + "failed!");
+        })
+  }
 
   static tryGettingGame(gameId) {
     const url = GET_GAME_URL.replace("{GAME_ID}", gameId)
@@ -40,9 +52,4 @@ export class GameConnectionController {
       throw Error("Put updating game failed");
     })
   }
-
-  static tryJoiningGame(gameId){
-    throw Error("Not implemented!");
-  }
-
 }

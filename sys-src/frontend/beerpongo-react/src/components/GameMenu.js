@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { GameConnectionController } from "../model/GameConnectionController";
 import {Link} from "react-router-dom";
 
@@ -9,8 +10,8 @@ import {Link} from "react-router-dom";
 //missing CSS
 function GameMenu() {
 
-    let [input, setInput] = useState(0);
-
+    let [input, setInput, playerid] = useState(0);
+    let navigate = useNavigate()
     return ( 
         <div>
             <div>
