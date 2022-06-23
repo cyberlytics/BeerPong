@@ -62,7 +62,7 @@ Das Frontend von Bier Pongo besteht aus einer React-Anwendung in einem Docker-Co
 
 Die Backend-Infrastruktur besteht aus Diensten von AWS. Die Brücke zwischen React und AWS bildet eine REST-API, realisiert durch AWS API-Gateway. Die zur Verfügung gestellten Endpoints nehmen API-Aufrufe von Seiten React entgegen und bedienen diese, indem AWS Lambda-Funktionen aufgerufen werden. Durch die Lambda-Funktionen werden die Spiel-Daten aus der AWS DynamoBD gelesen und geschrieben.
 
-Für die Verwaltung der AWS Infrastruktur wird per Infrastructure as code das AWS Cloud Development Kit verwendet.
+Für die Verwaltung der AWS Infrastruktur wird per Infrastructure as Code das AWS Cloud Development Kit verwendet.
 
 <br><br>
 
@@ -74,34 +74,57 @@ Für die Verwaltung der AWS Infrastruktur wird per Infrastructure as code das AW
 
 ## Architekturentscheidung
 
-<i>FORM: Ausformulierter Text, ggf. mit Bildern</i>
+Die Wahl des Frontend-"Frameworks" fiel auf die JavaScript-Library React, da sich mit ihr leicht moderne User Interfaces erstellen lassen und im Entwicklerteam schon Erfahrungen mit React und JavaScript im Allgemeinen vorhanden waren. Für React sprach auch die Modularität mittels Components. Diese sind wiederverwertbar und austauschbar und konnten unabhängig voneinander entwickelt werden.
 
-- Herleitung einer zentralen Entscheidung bzgl. Technologien & Frameworks
-- inkl. Alternativen und Bewertungskriterien
-- React, Python
-- Docker
-  Die Applikation lief zur Entwicklungszeit in einem Docker-Container, damit sie von allen Entwicklern ohne Kompatibilitätsprobleme nachgebaut und getestet werden konnte.
+Damit die Applikation von allen Entwicklern ohne Kompatilitätsprobleme auf z.T. unterschiedlichen Betriebssystemen gebaut, entwickelt und getestet werden kann, lag es nahe dafür einen Docker-Container zu verwenden. Auch nach der Entwicklungszeit ist geplant, den Docker-Container auf AWS Elastic Container Service zu hosten.
 
-## Struktur
+Das Backend wird komplett durch Dienste von AWS gebildet. Sämtliche Services werden über das AWS Cloud Development Kit per Infrastructure as Code definiert.
 
-<i>FORM: Diagramm/Grafik</i>
+Das AWS API-Gateway stellt verschiedene Endpoints zur Verfügung, damit die React-App auf Spiel-Daten zugreifen kann. Für die API-calls wird die Bibliothek axios verwendet.
+Das API-Gateway ruft abhängig vom Typ der Anfrage die entsprechende Lambda-Funktion auf.
 
-- Technische/fachliche Zerlegung des Systems
-- (ggf. Definition des Strings, der als Austausch dient)
-- Eine Lambda genauer beschreiben?
+Alle Lambda-Funktionen sind in der Programmiersprache Python geschrieben, da das Team hier auch schon Erfahrung hatte. Mithilfe der Python-Bibliothek boto3 werden die Spieldaten, welche in einer Datenbanktabelle der AWS DynamoBD liegen, in der Lambda-Funktion gelesen und geschrieben.
 
-## Verhalten
-
-<i>FORM: Diagramm/Grafik</i>
-
-- Zentrale Abläufe innerhalb des Systems
-- z.B. Walktrhough
-- z.B. Failover (autom. Ausfallsicherung, <b>hier nötig??</b>)
+In der AWS DynamoDB Datenbank liegt lediglich eine Tabelle, welche für jedes Spiel die Spiel-ID sowie den Spielstand (getroffene Becher) speichert. Die Daten gelangen anschließend über das API-Gateway zurück zur aufrufenden React-App. Entsprechend gilt der beschriebene Weg für das updaten eines Spiels.
 
 <br><br>
 
-# (Evtl.) Fazit und Ausblick
+## TODO: Verhalten
 
-- offene Punkte
-- Nächste Schritte
-- was haben wir nicht geschafft/was würde in Zukunft noch an Features implementiert werden?
+Im Folgenden wird der Ablauf eines Spiels beispielhaft in Stichpunkten beschrieben:
+
+- Spieler 1 öffnet die URL und erstellt ein Spiel.
+- Über den "post"-Endpoint wird das API-Gateway dazu aufgefordert, die entsprechende post-Lambda-Funktion aufzurufen.
+- Die Lambda-Funktion erstellt eine zufällige, eindeutige Spiel-ID und speichert diese in der Datenbanktabelle ab.
+- Spieler 2 öffnet die URL und tritt dem von Spieler 1 erstellten Spiel durch Eingabe der Spiel-ID bei
+- Über den "join"-Endpoint wird das API-Gateway dazu aufgefordert, die entsprechende join-Lambda-Funktion aufzurufen.
+- Die Lambda-Funktion erhöht die Spieler-Anzahl des entsprechenden Spiels um 1
+- Nun nutzen beide Spieler die gleiche URL, welche die Spiel-ID enthält, um zu spielen
+- **TODO: ANZEIGE DES AKTIVEN SPIELERS? SPIELER-ID?**
+- Spieler 1 trifft beispielsweise einen Becher, klickt diesen an und beendet anschließend seinen Zug
+- **TODO: WIE SIEHT DER STRING AUS, DER ÜBERGEBEN WIRD?**
+- String wird per API-call dem API-Gateway übergeben.
+- Der API-Gateway ruft die put-Lambda-Funktion auf, um die Spieldaten in der Datenbank zu aktualisieren
+- Dabei wird dem State (Spielstand) der String angehängt
+- Spieler 1 und 2 spielen abwechselnd bis eine Seite alle Becher getroffen hat
+- **TODO: WAS PASSIERT, WENN DAS SPIEL BEENDET IST?**
+
+  <br><br>
+
+# TODO: Fazit und Ausblick
+
+Derzeitiger Stand:
+
+- MUSS
+  - Spiel erstellen & beitreten möglich
+  - Spiel eintragen möglich
+- SOLL
+  - Userverwaltung nicht geschafft
+  - Historie nicht geschafft
+- KANN
+  - PW vergessen nicht geschafft.
+
+Nächste Schritte:
+
+- Fertigstellung der geplanten Features
+- Zukünftiges hosten des Docker-Containers in AWS ECS
