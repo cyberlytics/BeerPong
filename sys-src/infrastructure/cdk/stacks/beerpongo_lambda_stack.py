@@ -14,9 +14,11 @@ class BeerpongoLambdaStack(Stack):
 
         dynamodb_config = config.get("dynamoDB")
         games_table_config = dynamodb_config.get("gamesTable")
+        lambda_config = config.get("Lambda")
         post_config = lambda_config.get("lambdas").get("lambda_post")
         get_config = lambda_config.get("lambdas").get("lambda_get")
         put_config = lambda_config.get("lambdas").get("lambda_put")
+        join_config = lambda_config.get("lambdas").get("lambda_join")
 
         # Create the lambdas
         self.lambda_post = lambda_.Function(
@@ -46,6 +48,16 @@ class BeerpongoLambdaStack(Stack):
             environment={ "DB_TABLE" : games_table_config["tableName"]}
         )
 
+        self.lambda_join = lambda_.Function(
+            self,
+            id=join_config["name"],
+            runtime=lambda_.Runtime(join_config["runtime"]),
+            handler=join_config["handler"],
+            code=lambda_.Code.from_asset(join_config["code"]),
+            environment={ "DB_TABLE" : games_table_config["tableName"]}
+        )
+
+
         # granting DynamoDB access
         self.lambda_post.add_to_role_policy(PolicyStatement(
             actions=["dynamodb:GetItem", "dynamodb:PutItem"],
@@ -61,6 +73,12 @@ class BeerpongoLambdaStack(Stack):
             actions=["dynamodb:GetItem", "dynamodb:PutItem"],
             resources=["*"]
         ))
+
+        self.lambda_join.add_to_role_policy(PolicyStatement(
+            actions=["dynamodb:GetItem", "dynamodb:PutItem"],
+            resources=["*"]
+        ))
+
 
         self.lambda_get.add_permission(
             principal=ServicePrincipal('apigateway.amazonaws.com'),
@@ -79,3 +97,10 @@ class BeerpongoLambdaStack(Stack):
             action='lambda:InvokeFunction',
             id="apigateway-put-permission"
         )
+
+        self.lambda_join.add_permission(
+            principal=ServicePrincipal('apigateway.amazonaws.com'),
+            action='lambda:InvokeFunction',
+            id="apigateway-put-permission"
+        )
+

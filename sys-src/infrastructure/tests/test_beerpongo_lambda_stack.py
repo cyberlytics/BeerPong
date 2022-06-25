@@ -13,6 +13,13 @@ def app():
 @pytest.fixture
 def mock_config():
     yield {
+        "dynamoDB": {
+            "stackName": 'BeerpongoDynamoDbStackDev',
+            "gamesTable":{
+                "id": 'BeerpongoDevGamesTable',
+                "tableName": 'BeerpongoDevGamesTable'
+            }
+        },
         "Lambda": {
             "stackName": "LambdaStackDev",
             "lambdas": {
