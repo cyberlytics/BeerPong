@@ -1,14 +1,28 @@
 import boto3
+import os
 
-
-def join_handler(event, table="gamesTable"):
+def join_handler(event, context):
   
+    """
+    Increments the playerCount in the gameTable and
+    sends the incremented ID back to the player.
+    Requires a role with read/write access to DynamoDB.
+
+    :param:  table: the dynamodb table name with default value "gamesTable"
+    :return: response: JSON with http Status Code
+            200	Incremete playerID ok
+            500 Error receiving id
+            404 Error gameId not found
+    """
+
+
+    table_name = os.environ["DB_TABLE"]
 
 
     client = boto3.resource("dynamodb")
-    table = client.Table("gamesTable")
+    table = client.Table(table_name)
 
-    gameid = event.get('gameid')
+    gameid = event["GameId"]
 
     data = table.get_item(
         Key={
