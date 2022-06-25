@@ -22,7 +22,8 @@ def join_handler(event, context):
     client = boto3.resource("dynamodb")
     table = client.Table(table_name)
 
-    gameid = event["GameId"]
+    gameid = event['params']['path']['GameId']
+
 
     data = table.get_item(
         Key={
