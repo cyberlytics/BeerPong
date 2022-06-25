@@ -9,32 +9,12 @@ import {UserContext} from "../context/UserContext";
 class GamePage extends React.Component{
 
     static contextType = UserContext;
-
-    constructor(props) {
-        super(props);
-        let {userID, setUserID} = this.context;
-        const {id} = props.params;
-        let newState = {
-            gameId: id,
-            userId: userID,
-            updateString: "",
-            gameString: GameConnectionController.tryGettingGame(id),
-            activePlayer: false
-        };
-        this.setState(newState);
-        // Restore the default form of the updateString
-        this.resetUpdateString();
-
-        // now we have the gameString and can determine weather we are the active player or not
-        let splits = this.state.gameString.split(',');
-        if(splits[splits.length - 1].startsWith(this.state.userId)){
-            let stateCopy = this.state;
-            stateCopy.activePlayer = true;
-            this.setState(stateCopy);
-        }
-    }
+    invalidContext;
+    newState;
+    defaultUpdateString;
 
     componentDidMount() {
+        if(this.invalidContext) return;
         this.timerID = setInterval(
             () => this.tick(),
             10000
@@ -42,43 +22,85 @@ class GamePage extends React.Component{
     }
 
     componentWillUnmount() {
+        if(this.timerID === undefined) return;
         clearInterval(this.timerID);
     }
 
     tick(){
         // check if we are the active player or not
-        if(this.state.activePlayer === false){
+        if(this.newState.activePlayer === false){
             // we need to update the game
-            let stateCopy = this.state;
-            stateCopy.gameString = GameConnectionController.tryGettingGame(this.state.gameId);
-            this.setState(stateCopy);
+            this.newState.gameString = GameConnectionController.tryGettingGame(this.newState.gameId);
+            this.forceUpdate();
         }
     }
 
     resetUpdateString(){
-        let stateCopy = this.state;
-        stateCopy.updateString = this.state.userId + ":";
-        this.setState(stateCopy);
+        this.newState.updateString = this.newState.userId + ":";
     }
 
     cupClicked(cup){
         // check if we have to add or remove the cup
         // simple check if the updateString contains the cup
-        if(this.state.updateString.contains(cup)){
+        let cups = "";
+        if(this.newState.updateString.length > this.newState.userId.toString().length + 1){
+            cups = this.newState.updateString.substring(this.newState.userId.toString().length + 1);
+        }
+        if(cups.includes(cup)){
             // remove
-            let stateCopy = this.state;
-            stateCopy.updateString.remove(cup);
-            this.setState(stateCopy);
+            this.newState.updateString = this.newState.updateString.substring(0, this.newState.userId.toString().length + 1) + cups.replace(cup.toString(), '');
         }else{
             // add
-            let stateCopy = this.state;
-            stateCopy.updateString += cup;
-            this.setState(stateCopy);
+            this.newState.updateString += cup;
         }
+        this.forceUpdate();
     }
 
     render() {
-        // Build up the default dictionary
+        // Update the state
+        let {userID, setUserID, gameID, setGameID} = this.context;
+
+        // check if we have a valid context
+        if (userID === -1 && gameID === -1){
+            this.invalidContext = true;
+            // return an error message
+            return (
+                (
+                    <div>
+                        <p>Use the Button "Join" and do not enter the url for a specific game!</p>
+                    </div>
+                )
+            ) ;
+        }else{
+            this.invalidContext = false;
+        }
+
+        this.defaultUpdateString = userID + ":";
+        let gameString = GameConnectionController.tryGettingGame(gameID);
+        let _activePlayer = false;
+        // now we have the gameString and can determine weather we are the active player or not
+        let splits = gameString.split(',');
+        if(!splits[splits.length - 1].startsWith(userID)){
+            _activePlayer = true;
+        }
+
+        let currUpdateString;
+        if (this.newState === undefined){
+            currUpdateString = this.defaultUpdateString;
+        }else{
+            currUpdateString = this.newState.updateString;
+        }
+
+        let state = {
+            gameId: gameID,
+            userId: userID,
+            updateString: currUpdateString,
+            gameString: gameString,
+            activePlayer: _activePlayer
+        };
+        this.newState = state;
+
+        // Build op the default dictionary
         let dict = {
             // Classnames
             "p1_0_className": "cup1_unselected",
@@ -105,30 +127,30 @@ class GamePage extends React.Component{
             // during one turn more than once -> we send an update-request after finishing the turn
             // We need to allow updates only for the correct side!
             // TODO: We need to get the real player-ID's here
-            "p1_0_OnClick": this.state.userId === 3 ? null : (this.state.userId === 1 ?  function (){this.cupClicked(0)} : null),
-            "p1_1_OnClick": this.state.userId === 3 ? null : (this.state.userId === 1 ?  function (){this.cupClicked(1)} : null),
-            "p1_2_OnClick": this.state.userId === 3 ? null : (this.state.userId === 1 ?  function (){this.cupClicked(2)} : null),
-            "p1_3_OnClick": this.state.userId === 3 ? null : (this.state.userId === 1 ?  function (){this.cupClicked(3)} : null),
-            "p1_4_OnClick": this.state.userId === 3 ? null : (this.state.userId === 1 ?  function (){this.cupClicked(4)} : null),
-            "p1_5_OnClick": this.state.userId === 3 ? null : (this.state.userId === 1 ?  function (){this.cupClicked(5)} : null),
-            "p1_6_OnClick": this.state.userId === 3 ? null : (this.state.userId === 1 ?  function (){this.cupClicked(6)} : null),
-            "p1_7_OnClick": this.state.userId === 3 ? null : (this.state.userId === 1 ?  function (){this.cupClicked(7)} : null),
-            "p1_8_OnClick": this.state.userId === 3 ? null : (this.state.userId === 1 ?  function (){this.cupClicked(8)} : null),
-            "p1_9_OnClick": this.state.userId === 3 ? null : (this.state.userId === 1 ?  function (){this.cupClicked(9)} : null),
-            "p2_0_OnClick": this.state.userId === 3 ? null : (this.state.userId === 2 ?  function (){this.cupClicked(0)} : null),
-            "p2_1_OnClick": this.state.userId === 3 ? null : (this.state.userId === 2 ?  function (){this.cupClicked(1)} : null),
-            "p2_2_OnClick": this.state.userId === 3 ? null : (this.state.userId === 2 ?  function (){this.cupClicked(2)} : null),
-            "p2_3_OnClick": this.state.userId === 3 ? null : (this.state.userId === 2 ?  function (){this.cupClicked(3)} : null),
-            "p2_4_OnClick": this.state.userId === 3 ? null : (this.state.userId === 2 ?  function (){this.cupClicked(4)} : null),
-            "p2_5_OnClick": this.state.userId === 3 ? null : (this.state.userId === 2 ?  function (){this.cupClicked(5)} : null),
-            "p2_6_OnClick": this.state.userId === 3 ? null : (this.state.userId === 2 ?  function (){this.cupClicked(6)} : null),
-            "p2_7_OnClick": this.state.userId === 3 ? null : (this.state.userId === 2 ?  function (){this.cupClicked(7)} : null),
-            "p2_8_OnClick": this.state.userId === 3 ? null : (this.state.userId === 2 ?  function (){this.cupClicked(8)} : null),
-            "p2_9_OnClick": this.state.userId === 3 ? null : (this.state.userId === 2 ?  function (){this.cupClicked(9)} : null),
+            "p1_0_OnClick": (this.newState.userId === 3 || this.newState.userId === 2) ? null : (this.newState.activePlayer === true ?  this.cupClicked.bind(this, 0) : null),
+            "p1_1_OnClick": (this.newState.userId === 3 || this.newState.userId === 2) ? null : (this.newState.activePlayer === true ?  this.cupClicked.bind(this,1) : null),
+            "p1_2_OnClick": (this.newState.userId === 3 || this.newState.userId === 2) ? null : (this.newState.activePlayer === true ?  this.cupClicked.bind(this,2) : null),
+            "p1_3_OnClick": (this.newState.userId === 3 || this.newState.userId === 2) ? null : (this.newState.activePlayer === true ?  this.cupClicked.bind(this,3) : null),
+            "p1_4_OnClick": (this.newState.userId === 3 || this.newState.userId === 2) ? null : (this.newState.activePlayer === true ?  this.cupClicked.bind(this,4) : null),
+            "p1_5_OnClick": (this.newState.userId === 3 || this.newState.userId === 2) ? null : (this.newState.activePlayer === true ?  this.cupClicked.bind(this,5) : null),
+            "p1_6_OnClick": (this.newState.userId === 3 || this.newState.userId === 2) ? null : (this.newState.activePlayer === true ?  this.cupClicked.bind(this,6) : null),
+            "p1_7_OnClick": (this.newState.userId === 3 || this.newState.userId === 2) ? null : (this.newState.activePlayer === true ?  this.cupClicked.bind(this,7) : null),
+            "p1_8_OnClick": (this.newState.userId === 3 || this.newState.userId === 2) ? null : (this.newState.activePlayer === true ?  this.cupClicked.bind(this,8) : null),
+            "p1_9_OnClick": (this.newState.userId === 3 || this.newState.userId === 2) ? null : (this.newState.activePlayer === true ?  this.cupClicked.bind(this,9) : null),
+            "p2_0_OnClick": (this.newState.userId === 3 || this.newState.userId === 1) ? null : (this.newState.activePlayer === true ?  this.cupClicked.bind(this,0) : null),
+            "p2_1_OnClick": (this.newState.userId === 3 || this.newState.userId === 1) ? null : (this.newState.activePlayer === true ?  this.cupClicked.bind(this,1) : null),
+            "p2_2_OnClick": (this.newState.userId === 3 || this.newState.userId === 1) ? null : (this.newState.activePlayer === true ?  this.cupClicked.bind(this,2) : null),
+            "p2_3_OnClick": (this.newState.userId === 3 || this.newState.userId === 1) ? null : (this.newState.activePlayer === true ?  this.cupClicked.bind(this,3) : null),
+            "p2_4_OnClick": (this.newState.userId === 3 || this.newState.userId === 1) ? null : (this.newState.activePlayer === true ?  this.cupClicked.bind(this,4) : null),
+            "p2_5_OnClick": (this.newState.userId === 3 || this.newState.userId === 1) ? null : (this.newState.activePlayer === true ?  this.cupClicked.bind(this,5) : null),
+            "p2_6_OnClick": (this.newState.userId === 3 || this.newState.userId === 1) ? null : (this.newState.activePlayer === true ?  this.cupClicked.bind(this,6) : null),
+            "p2_7_OnClick": (this.newState.userId === 3 || this.newState.userId === 1) ? null : (this.newState.activePlayer === true ?  this.cupClicked.bind(this,7) : null),
+            "p2_8_OnClick": (this.newState.userId === 3 || this.newState.userId === 1) ? null : (this.newState.activePlayer === true ?  this.cupClicked.bind(this,8) : null),
+            "p2_9_OnClick": (this.newState.userId === 3 || this.newState.userId === 1) ? null : (this.newState.activePlayer === true ?  this.cupClicked.bind(this, 9) : null)
         }
 
         // parse the game-string and set the className for the already hit cups to selected and remove the on-click
-        let turns = this.state.gameString.split(',');
+        let turns = this.newState.gameString.split(',');
         for(const element of turns){
             let turn = element.split(':');
             if(turn.length === 2){
@@ -171,15 +193,15 @@ class GamePage extends React.Component{
 
         // parse the update-string and change the className for the currently selected cups for this round
         // do not check the id and the colon
-        for (let i = 2; i < this.state.updateString.length - this.state.userId.length - 2; i++){
+        for (let i = this.newState.userId.toString().length + 1; i < this.newState.updateString.length; i++){
             let cupName;
             let newClassName;
-            if(this.state.userId === 1){
-                cupName = "p1_" + this.state.updateString[i];
+            if(this.newState.userId === 1){
+                cupName = "p1_" + this.newState.updateString[i];
                 newClassName = "cup1_unselected_clicked";
 
             }else{
-                cupName = "p2_" + this.state.updateString[i];
+                cupName = "p2_" + this.newState.updateString[i];
                 newClassName = "cup2_unselected_clicked";
             }
 
@@ -189,10 +211,10 @@ class GamePage extends React.Component{
 
         let document = (
             <div>
-                <p>ID: {this.state.gameID}</p>
+                <p>ID: {this.newState.gameId}</p>
                 <Field dictVal={dict}/>
-                {/* TODO: commit the hit cups*/}
-                <button onClick={() => {GameConnectionController.tryUpdatingGame(this.state.gameId, this.state.updateString);
+                <button onClick={() => {GameConnectionController.tryUpdatingGame(this.newState.gameId,
+                    this.newState.updateString);
                     this.resetUpdateString()}}>
                     Spielzug beenden
                 </button>

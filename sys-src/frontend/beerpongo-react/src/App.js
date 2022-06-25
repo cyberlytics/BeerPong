@@ -7,17 +7,18 @@ import {useState} from "react";
 
 
 function App() {
-    const [userID, setUserID] = useState(0);
-    const value = {userID, setUserID};
+    const [userID, setUserID] = useState(-1);
+    const [gameID, setGameID] = useState(-1);
+    const value = {userID, setUserID, gameID, setGameID};
     return (
-      <UserContext.Provider value={value}>
-          <BrowserRouter>
-                <Routes>
-                      <Route exact path='/' element={<GameMenu/>}/>
-                      <Route exact path='/game/:id' element={<GamePage/>}/>
-                </Routes>
-          </BrowserRouter>
-      </UserContext.Provider>
+      <BrowserRouter>
+          <UserContext.Provider value={value}>
+            <Routes>
+              <Route exact path='/' element={<GameMenu/>}/>
+              <Route exact path='/game/:id' element={<GamePage/>}/>
+            </Routes>
+          </UserContext.Provider>
+      </BrowserRouter>
   );
 }
 
