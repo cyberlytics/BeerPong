@@ -22,7 +22,7 @@ def aws_credentials():
 
 
 @pytest.fixture
-def dynamodb():
+def dynamodb(aws_credentials):
     yield boto3.resource('dynamodb')
 
 
@@ -41,13 +41,20 @@ def create_games_table(dynamodb):
 
 @mock_dynamodb
 def test_post(dynamodb):
+    
+    os.environ['DB_TABLE'] = table_name
     create_games_table(dynamodb)
 
     test_game_id = 'GAME_ID'
-    response = post(table=table_name, game_id=test_game_id)
+    event = {
+        "TableName": table_name,
+        "GameId": test_game_id
+    }
+
+    response = post(event, {})
 
     # assert response
-    assert response == {"statusCode": "200", "body": ANY}
+    assert response == {"statusCode": 200, "body": ANY}
 
     body = json.loads(response["body"])
     assert len(body) == 2
@@ -70,10 +77,14 @@ def test_post_existing_game_id_fails(dynamodb):
     existing_item = {"GameId": existing_game_id, "State": "EXISTING_STATE"}
     table.put_item(Item=existing_item)
 
-    response = post(table=table_name, game_id=existing_game_id)
+    event = {
+        "GameId": existing_game_id
+    }
+
+    response = post(event, {})
 
     # assert response
-    assert response == {"statusCode": "500"}
+    assert response == {"statusCode": 500}
 
     # assert existing game item in dynamodb
     data = table.scan()
