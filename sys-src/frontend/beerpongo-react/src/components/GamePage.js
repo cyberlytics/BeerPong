@@ -2,43 +2,39 @@ import Field from "./Field";
 import React from "react";
 import {Link} from "react-router-dom";
 import {GameConnectionController} from "../model/GameConnectionController";
+import {UserContext} from "../context/UserContext";
+
 
 
 class GamePage extends React.Component{
 
+    static contextType = UserContext;
 
-    componentDidMount() {
-        if(this.props.match == null)
-            return;
-
-        if(! ('userID' in this.props.match)){
-            throw Error("Missing parameter for UserID");
-        }
+    constructor(props) {
+        super(props);
+        let {userID, setUserID} = this.context;
+        const {id} = props.params;
         let newState = {
-            gameID: 0,
-            userID: this.props.userID,
+            gameId: id,
+            userId: userID,
             updateString: "",
-            gameString: GameConnectionController.tryGettingGame(this.props.gameID),
+            gameString: GameConnectionController.tryGettingGame(id),
             activePlayer: false
         };
         this.setState(newState);
         // Restore the default form of the updateString
         this.resetUpdateString();
 
-
         // now we have the gameString and can determine weather we are the active player or not
         let splits = this.state.gameString.split(',');
-        if(splits[splits.length - 1].startsWith(this.state.userID)){
+        if(splits[splits.length - 1].startsWith(this.state.userId)){
             let stateCopy = this.state;
             stateCopy.activePlayer = true;
             this.setState(stateCopy);
         }
+    }
 
-        const {id} = this.props.params;
-        let stateCopy = this.state;
-        stateCopy.id = id;
-        this.setState(stateCopy);
-
+    componentDidMount() {
         this.timerID = setInterval(
             () => this.tick(),
             10000
@@ -54,14 +50,14 @@ class GamePage extends React.Component{
         if(this.state.activePlayer === false){
             // we need to update the game
             let stateCopy = this.state;
-            stateCopy.gameString = GameConnectionController.tryGettingGame(this.state.gameID);
+            stateCopy.gameString = GameConnectionController.tryGettingGame(this.state.gameId);
             this.setState(stateCopy);
         }
     }
 
     resetUpdateString(){
         let stateCopy = this.state;
-        stateCopy.updateString = this.state.userID + ":";
+        stateCopy.updateString = this.state.userId + ":";
         this.setState(stateCopy);
     }
 
@@ -83,14 +79,6 @@ class GamePage extends React.Component{
 
     render() {
         // Build up the default dictionary
-        // decide if we are here on a valid route -> we came from a link!
-        if (this.state == null){
-            return (
-                <div>
-                    <p>Use the Button "Join" and do not enter the url for a specific game!</p>
-                </div>
-            )
-        }
         let dict = {
             // Classnames
             "p1_0_className": "cup1_unselected",
@@ -117,26 +105,26 @@ class GamePage extends React.Component{
             // during one turn more than once -> we send an update-request after finishing the turn
             // We need to allow updates only for the correct side!
             // TODO: We need to get the real player-ID's here
-            "p1_0_OnClick": this.state.userID === 3 ? null : (this.state.userID === 1 ?  function (){this.cupClicked(0)} : null),
-            "p1_1_OnClick": this.state.userID === 3 ? null : (this.state.userID === 1 ?  function (){this.cupClicked(1)} : null),
-            "p1_2_OnClick": this.state.userID === 3 ? null : (this.state.userID === 1 ?  function (){this.cupClicked(2)} : null),
-            "p1_3_OnClick": this.state.userID === 3 ? null : (this.state.userID === 1 ?  function (){this.cupClicked(3)} : null),
-            "p1_4_OnClick": this.state.userID === 3 ? null : (this.state.userID === 1 ?  function (){this.cupClicked(4)} : null),
-            "p1_5_OnClick": this.state.userID === 3 ? null : (this.state.userID === 1 ?  function (){this.cupClicked(5)} : null),
-            "p1_6_OnClick": this.state.userID === 3 ? null : (this.state.userID === 1 ?  function (){this.cupClicked(6)} : null),
-            "p1_7_OnClick": this.state.userID === 3 ? null : (this.state.userID === 1 ?  function (){this.cupClicked(7)} : null),
-            "p1_8_OnClick": this.state.userID === 3 ? null : (this.state.userID === 1 ?  function (){this.cupClicked(8)} : null),
-            "p1_9_OnClick": this.state.userID === 3 ? null : (this.state.userID === 1 ?  function (){this.cupClicked(9)} : null),
-            "p2_0_OnClick": this.state.userID === 3 ? null : (this.state.userID === 2 ?  function (){this.cupClicked(0)} : null),
-            "p2_1_OnClick": this.state.userID === 3 ? null : (this.state.userID === 2 ?  function (){this.cupClicked(1)} : null),
-            "p2_2_OnClick": this.state.userID === 3 ? null : (this.state.userID === 2 ?  function (){this.cupClicked(2)} : null),
-            "p2_3_OnClick": this.state.userID === 3 ? null : (this.state.userID === 2 ?  function (){this.cupClicked(3)} : null),
-            "p2_4_OnClick": this.state.userID === 3 ? null : (this.state.userID === 2 ?  function (){this.cupClicked(4)} : null),
-            "p2_5_OnClick": this.state.userID === 3 ? null : (this.state.userID === 2 ?  function (){this.cupClicked(5)} : null),
-            "p2_6_OnClick": this.state.userID === 3 ? null : (this.state.userID === 2 ?  function (){this.cupClicked(6)} : null),
-            "p2_7_OnClick": this.state.userID === 3 ? null : (this.state.userID === 2 ?  function (){this.cupClicked(7)} : null),
-            "p2_8_OnClick": this.state.userID === 3 ? null : (this.state.userID === 2 ?  function (){this.cupClicked(8)} : null),
-            "p2_9_OnClick": this.state.userID === 3 ? null : (this.state.userID === 2 ?  function (){this.cupClicked(9)} : null),
+            "p1_0_OnClick": this.state.userId === 3 ? null : (this.state.userId === 1 ?  function (){this.cupClicked(0)} : null),
+            "p1_1_OnClick": this.state.userId === 3 ? null : (this.state.userId === 1 ?  function (){this.cupClicked(1)} : null),
+            "p1_2_OnClick": this.state.userId === 3 ? null : (this.state.userId === 1 ?  function (){this.cupClicked(2)} : null),
+            "p1_3_OnClick": this.state.userId === 3 ? null : (this.state.userId === 1 ?  function (){this.cupClicked(3)} : null),
+            "p1_4_OnClick": this.state.userId === 3 ? null : (this.state.userId === 1 ?  function (){this.cupClicked(4)} : null),
+            "p1_5_OnClick": this.state.userId === 3 ? null : (this.state.userId === 1 ?  function (){this.cupClicked(5)} : null),
+            "p1_6_OnClick": this.state.userId === 3 ? null : (this.state.userId === 1 ?  function (){this.cupClicked(6)} : null),
+            "p1_7_OnClick": this.state.userId === 3 ? null : (this.state.userId === 1 ?  function (){this.cupClicked(7)} : null),
+            "p1_8_OnClick": this.state.userId === 3 ? null : (this.state.userId === 1 ?  function (){this.cupClicked(8)} : null),
+            "p1_9_OnClick": this.state.userId === 3 ? null : (this.state.userId === 1 ?  function (){this.cupClicked(9)} : null),
+            "p2_0_OnClick": this.state.userId === 3 ? null : (this.state.userId === 2 ?  function (){this.cupClicked(0)} : null),
+            "p2_1_OnClick": this.state.userId === 3 ? null : (this.state.userId === 2 ?  function (){this.cupClicked(1)} : null),
+            "p2_2_OnClick": this.state.userId === 3 ? null : (this.state.userId === 2 ?  function (){this.cupClicked(2)} : null),
+            "p2_3_OnClick": this.state.userId === 3 ? null : (this.state.userId === 2 ?  function (){this.cupClicked(3)} : null),
+            "p2_4_OnClick": this.state.userId === 3 ? null : (this.state.userId === 2 ?  function (){this.cupClicked(4)} : null),
+            "p2_5_OnClick": this.state.userId === 3 ? null : (this.state.userId === 2 ?  function (){this.cupClicked(5)} : null),
+            "p2_6_OnClick": this.state.userId === 3 ? null : (this.state.userId === 2 ?  function (){this.cupClicked(6)} : null),
+            "p2_7_OnClick": this.state.userId === 3 ? null : (this.state.userId === 2 ?  function (){this.cupClicked(7)} : null),
+            "p2_8_OnClick": this.state.userId === 3 ? null : (this.state.userId === 2 ?  function (){this.cupClicked(8)} : null),
+            "p2_9_OnClick": this.state.userId === 3 ? null : (this.state.userId === 2 ?  function (){this.cupClicked(9)} : null),
         }
 
         // parse the game-string and set the className for the already hit cups to selected and remove the on-click
@@ -183,10 +171,10 @@ class GamePage extends React.Component{
 
         // parse the update-string and change the className for the currently selected cups for this round
         // do not check the id and the colon
-        for (let i = 2; i < this.state.updateString.length - this.state.userID.length - 2; i++){
+        for (let i = 2; i < this.state.updateString.length - this.state.userId.length - 2; i++){
             let cupName;
             let newClassName;
-            if(this.state.userID === 1){
+            if(this.state.userId === 1){
                 cupName = "p1_" + this.state.updateString[i];
                 newClassName = "cup1_unselected_clicked";
 
@@ -204,7 +192,7 @@ class GamePage extends React.Component{
                 <p>ID: {this.state.gameID}</p>
                 <Field dictVal={dict}/>
                 {/* TODO: commit the hit cups*/}
-                <button onClick={() => {GameConnectionController.tryUpdatingGame(this.state.gameID, this.state.updateString);
+                <button onClick={() => {GameConnectionController.tryUpdatingGame(this.state.gameId, this.state.updateString);
                     this.resetUpdateString()}}>
                     Spielzug beenden
                 </button>
@@ -219,6 +207,5 @@ class GamePage extends React.Component{
         );
     }
 }
-
 
 export default GamePage;
