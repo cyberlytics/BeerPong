@@ -37,11 +37,17 @@
 .cup1_unselected:hover {
     border: 3px solid #fbbebe;
     background-color: red;
+    width: 7vh;
+    height: 7vh;
+    border-radius: 50%;
 }
 
 .cup1_unselected_clicked {
     border: 3px solid #fbbebe;
     background-color: red;
+    width: 7vh;
+    height: 7vh;
+    border-radius: 50%;
 }
 
 .cup1_selected{
@@ -63,11 +69,17 @@
 .cup2_unselected:hover {
     border: 3px solid #a0b1ff;
     background-color: blue;
+    width: 7vh;
+    height: 7vh;
+    border-radius: 50%;
 }
 
 .cup2_unselected_clicked {
     border: 3px solid #a0b1ff;
     background-color: blue;
+    width: 7vh;
+    height: 7vh;
+    border-radius: 50%;
 }
 
 .cup2_selected{
