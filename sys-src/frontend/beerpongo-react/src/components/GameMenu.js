@@ -1,37 +1,32 @@
-import {useContext, useState} from "react";
+import {useContext} from "react";
 import { GameConnectionController } from "../model/GameConnectionController";
 import {UserContext} from "../context/UserContext";
 import {Link} from "react-router-dom";
 
 //missing CSS
 function GameMenu() {
-
-    let [input, setInput] = useState(0);
-
-    const {userID, setUserID} = useContext(UserContext);
-
-
-    return ( 
+    const {userID, setUserID, gameID, setGameID} = useContext(UserContext);
+    return (
         <div>
             <div>
-                <input 
-                    type="text" 
-                    name="gameid" 
+                <input
+                    type="text"
+                    name="gameid"
                     onChange={(e) => {
-                        setInput(e.target.value);
+                        setGameID(e.target.value);
                         }}>
                  </input>
-                <Link to={`game/${input}`}>
+                <Link to={`game/${gameID}`}>
                     <span onClick={() => {
-                        setUserID(GameConnectionController.tryJoiningGame(input))}}>
+                        setUserID(GameConnectionController.tryJoiningGame(gameID))}}>
                     Join Game
                     </span>
                 </Link>
 
-            </div> 
+            </div>
 
-            <div>    
-                <button 
+            <div>
+                <button
                     onClick={() => {
                         GameConnectionController.tryCreatingGame()}}>
                     Create Game
