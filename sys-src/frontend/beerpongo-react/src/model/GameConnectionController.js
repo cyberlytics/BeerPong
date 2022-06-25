@@ -42,7 +42,9 @@ export class GameConnectionController {
   }
 
   static tryJoiningGame(gameId){
-    throw Error("Not implemented!");
+    // dummy for testing value
+    return 23;
+    //throw Error("Not implemented!");
   }
 
 }
