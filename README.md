@@ -69,7 +69,7 @@ Deploy infrastructure stacks to AWS and build frontend docker container:
 - `deployment-profile`: The deployment profile, which links to a user. Like above use `bierpongo-user`.
 - `stack_id`: The id of the stack you want to deploy. For a deployment of all stacks use `--all`.
 ```
-make deployPROFILE=<deployment-profile> STACK=<stack_id> CONFIG=<env>
+make deploy PROFILE=<deployment-profile> STACK=<stack_id> CONFIG=<env>
 ```
 Deploy infrastructure stacks to AWS:
 ```
