@@ -152,7 +152,7 @@ Request-Typ: GET-Request
 Aufgabe: Die JOIN-Lambda lässt andere Spieler oder Zuschauer einem vorhandenen Spiel beitreten.
 
 Beschreibung:
-Die JOIN-Lambda nimmt eine GameId entgegen, erhöht "playercount" in der Datenbank und schickt den aktuelle playercount zurück.
+Die JOIN-Lambda nimmt eine GameId entgegen, erhöht "playercount" in der Datenbank und schickt den aktuellen playercount sowie die GameId zurück.
 
 Response:
 
