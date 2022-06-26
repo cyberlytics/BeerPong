@@ -26,6 +26,7 @@ def apigateway_stack(app, mock_config):
         "get_LambdaName": "get_LambdaName",
         "post_LambdaName": "post_LambdaName",
         "put_LambdaName": "put_LambdaName",
+        "join_LambdaName": "join_LambdaName",
     }
     yield BeerpongoAPIGatewayStack(
         app,
