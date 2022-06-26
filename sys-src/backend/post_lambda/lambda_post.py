@@ -34,7 +34,8 @@ def post(event, context):
     
     # set game id if present, else generate one
     if "GameId" in event:
-        game_id = event["GameId"]
+        game_id = event['params']['path']['GameId']
+
     else:
         game_id = generate_game_id()
 
@@ -52,11 +53,6 @@ def post(event, context):
 
         return {
             "statusCode": 200,
-                        'headers': {
-                'Access-Control-Allow-Headers': 'Content-Type',
-                'Access-Control-Allow-Origin': '*',
-                'Access-Control-Allow-Methods': 'OPTIONS,POST,GET'
-            }, 
             "body": json.dumps(new_game)}
     except Exception:
         logging.exception("Failed to put new game item")

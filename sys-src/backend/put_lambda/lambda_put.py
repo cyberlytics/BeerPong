@@ -73,12 +73,7 @@ def put(event, context):
     # if all went well
     response = {
         'statusCode': 200,
-        'headers': {
-            'Access-Control-Allow-Headers': 'Content-Type',
-            'Access-Control-Allow-Origin': '*',
-            'Access-Control-Allow-Methods': 'OPTIONS,POST,GET'
-        }, 
-        'body': json.dumps({"message": f"Game State of Game {id} updated"})
+        'body': json.dumps({"message": "Game State of Game {id} updated"})
     }
 
     return response
