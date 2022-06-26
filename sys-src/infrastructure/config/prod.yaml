@@ -28,3 +28,8 @@ Lambda:
       code: "./../backend/put_lambda"
       handler: "lambda_put.put"
       runtime: "python3.9"
+    lambda_join:
+      name: "lambdaProd_join"
+      code: "./../backend/join_lambda"
+      handler: "join_lambda.join_handler"
+      runtime: "python3.9"

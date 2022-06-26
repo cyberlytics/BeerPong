@@ -26,6 +26,7 @@ class BeerpongoAPIGatewayStack(Stack):
         ARN_GAME_POST = "${LambdaArn-GAME_POST}"
         ARN_GAME_PUT = "${LambdaArn-GAME_PUT}"
         ARN_GAME_GET = "${LambdaArn-GAME_GET}"
+        ARN_GAME_JOIN = "${LambdaArn-GAME_JOIN}"
 
         filedata = None
         with open(apiFile, 'r') as file:
@@ -35,6 +36,7 @@ class BeerpongoAPIGatewayStack(Stack):
             filedata.replace(ARN_GAME_POST, LambdaInfo["post_LambdaName"])
                     .replace(ARN_GAME_PUT, LambdaInfo["put_LambdaName"])
                     .replace(ARN_GAME_GET, LambdaInfo["get_LambdaName"])
+                    .replace(ARN_GAME_JOIN, LambdaInfo["join_LambdaName"])
         )
 
         # We save the file under a different name
