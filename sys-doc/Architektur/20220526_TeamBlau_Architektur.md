@@ -83,11 +83,83 @@ Das Backend wird komplett durch Dienste von AWS gebildet. Sämtliche Services we
 Das AWS API-Gateway stellt verschiedene Endpoints zur Verfügung, damit die React-App auf Spiel-Daten zugreifen kann. Für die API-calls wird die Bibliothek axios verwendet.
 Das API-Gateway ruft abhängig vom Typ der Anfrage die entsprechende Lambda-Funktion auf.
 
-Alle Lambda-Funktionen sind in der Programmiersprache Python geschrieben, da das Team hier auch schon Erfahrung hatte. Mithilfe der Python-Bibliothek boto3 werden die Spieldaten, welche in einer Datenbanktabelle der AWS DynamoBD liegen, in der Lambda-Funktion gelesen und geschrieben.
+Alle Lambda-Funktionen sind in der Programmiersprache Python geschrieben, da das Team hier auch schon Erfahrung hatte. Mithilfe der Python-Bibliothek boto3 werden die Spieldaten, welche in einer Datenbanktabelle der AWS DynamoBD liegen, in der Lambda-Funktion gelesen und geschrieben. Näheres zu den einzelnen Lambda Funktionen wird im nachfolgenden noch beschrieben.
 
 In der AWS DynamoDB Datenbank liegt lediglich eine Tabelle, welche für jedes Spiel die Spiel-ID sowie den Spielstand (getroffene Becher) speichert. Die Daten gelangen anschließend über das API-Gateway zurück zur aufrufenden React-App. Entsprechend gilt der beschriebene Weg für das updaten eines Spiels.
 
 <br><br>
+# Beschreibung der Lambda Funktionen
+## POST-Lambda
+
+Request-Typ: POST-Request
+
+Aufgabe: Erstellen eines neuen Spiels
+
+Beschreibung: Die POST-Lambda erstellt eine neue eindeutige GameId mit 8 Zeichen. Anschließend schreibt Sie ein neues Item in die Datenbank, das wie folgt aufgebaut ist: 
+
+```
+{
+    "GameId": game_id,
+    "State": "", 
+    "playerCount": 1
+}
+
+```
+
+Response: 
+
+* 200 OK
+* 500 Error bei Erstellung des Spiels
+
+<br>
+
+## GET-Lambda
+
+Request-Typ: GET-Request
+
+Aufgabe: Die GET-Lambda ist dafür zuständig Spielstand abfragen zu bewerkstelligen.
+
+Beschreibung:
+Die GET-Lambda liefert das Item zur gegebenen GameId zurück.
+
+Response:
+
+* 200 OK
+* 404 Spiel nicht gefunden
+
+<br>
+
+## PUT-Lambda
+
+Request-Typ: PUT-Request
+
+Aufgabe: Die PUT-Lambda wird dazu benutzt den Spielstand nach jeder Runde anzupassen.
+
+Beschreibung:
+Die PUT-Lambda erhält eine GameId und den State-String der letzten Spielrunde und fügt Sie zum bereits vorhandenen State-String in der Datenbank hinzu. 
+
+Response:
+
+* 200 OK
+* 400 Invalide GameId 
+* 500 Error beim updaten des Spiels
+<br>
+
+## JOIN-Lambda
+
+Request-Typ: GET-Request
+
+Aufgabe: Die JOIN-Lambda lässt andere Spieler oder Zuschauer einem vorhandenen Spiel beitreten.
+
+Beschreibung:
+Die JOIN-Lambda nimmt eine GameId entgegen, erhöht "playercount" in der Datenbank und schickt den aktuelle playercount zurück.
+
+Response:
+
+* 200 OK
+* 404 Spiel nicht gefunden
+* 500 Error beim Beitritt
+
 
 ## TODO: Verhalten
 
