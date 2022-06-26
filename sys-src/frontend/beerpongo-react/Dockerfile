@@ -4,6 +4,8 @@ RUN mkdir /app
 COPY . /app
 WORKDIR /app
 
+ARG backend_url 
+ENV REACT_APP_BACKEND_URL=$backend_url
 RUN npm install
 ENV PATH /node_modules/.bin:$PATH
 RUN npm run build
