@@ -174,8 +174,8 @@ Im Folgenden wird der Ablauf eines Spiels beispielhaft in Stichpunkten beschrieb
 - Nun nutzen beide Spieler die gleiche URL, welche die Spiel-ID enthält, um zu spielen
 - **TODO: ANZEIGE DES AKTIVEN SPIELERS? SPIELER-ID?**
 - Spieler 1 trifft beispielsweise einen Becher, klickt diesen an und beendet anschließend seinen Zug
-- **TODO: WIE SIEHT DER STRING AUS, DER ÜBERGEBEN WIRD?**
-- String wird per API-call dem API-Gateway übergeben.
+- Der State-String der letzten Runde wird per API-call dem API-Gateway übergeben. Beispiel: "1:52" 
+- Das bedeutet übersetzt, dass Spieler 1 Becher 5 und Becher 2 getroffen hat.
 - Der API-Gateway ruft die put-Lambda-Funktion auf, um die Spieldaten in der Datenbank zu aktualisieren
 - Dabei wird dem State (Spielstand) der String angehängt
 - Spieler 1 und 2 spielen abwechselnd bis eine Seite alle Becher getroffen hat
