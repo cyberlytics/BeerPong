@@ -41,7 +41,13 @@ def mock_config():
                     "handler": "put",
                     "runtime": "python3.9",
                 },
-            },
+                "lambda_join": {
+                      "name": "lambdaDev_join",
+                      "code": "./../backend/join_lambda",
+                      "handler": "join_lambda.join_handler",
+                      "runtime": "python3.9",
+                }
+            }
         }
     }
 
