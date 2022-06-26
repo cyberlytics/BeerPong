@@ -10,7 +10,7 @@ You can build the docker image with:
 
 and run your container on your local pc with:
 
-### `docker run -d -p 80:80 beerpongo-webapp:latest` 
+### `docker build --build-arg backend_url={backend-url} -t beerpongo-webapp:latest .` 
 
 Now you can access the site over the localhost.
 
