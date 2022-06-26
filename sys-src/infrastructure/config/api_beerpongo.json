@@ -13,6 +13,53 @@
   ],
   "paths": {
     "/game": {
+        "options": {
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "tags": [
+            "CORS"
+          ],
+          "x-amazon-apigateway-integration": {
+            "type": "mock",
+            "passthroughBehavior" : "when_no_match",
+            "requestTemplates": {
+              "application/json": "{\n  \"statusCode\" : 200\n}\n"
+            },
+            "responses": {
+              "default": {
+                "statusCode": "200",
+                "responseParameters": {
+                  "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date,Authorization,X-Api-Key'",
+                  "method.response.header.Access-Control-Allow-Methods": "'*'",
+                  "method.response.header.Access-Control-Allow-Origin": "'*'"
+                },
+                "responseTemplates": {
+                  "application/json": "{}\n"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Default response for CORS method",
+              "headers": {
+                "Access-Control-Allow-Headers": {
+                  "type": "string"
+                },
+                "Access-Control-Allow-Methods": {
+                  "type": "string"
+                },
+                "Access-Control-Allow-Origin": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
       "post": {
         "tags": [
           "Game"
@@ -26,6 +73,17 @@
         "responses": {
           "200": {
             "description": "New game created.",
+            "headers": {
+              "Access-Control-Allow-Headers": {
+                  "type": "string"
+                },
+              "Access-Control-Allow-Methods": {
+                  "type": "string"
+                },
+              "Access-Control-Allow-Origin": {
+                  "type": "string"
+                }
+             },
             "schema": {
               "$ref": "#/definitions/Game"
             }
@@ -38,8 +96,12 @@
           "httpMethod": "POST",
           "uri": "arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${LambdaArn-GAME_POST}/invocations",
           "responses": {
+
             "default": {
-              "statusCode": 200
+              "statusCode": 200,
+              "responseParameters":{
+                "method.response.header.Access-Control-Allow-Origin" : "'*'"
+              }
             }
           },
           "passthroughBehavior": "when_no_match",
@@ -73,7 +135,12 @@
         ],
         "responses": {
           "200": {
-            "description": "Update ok"
+            "description": "Update ok",
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                  "type": "string"
+                }
+             }
           },
           "400": {
             "description": "Invalid ID supplied"
@@ -87,7 +154,10 @@
           "uri": "arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${LambdaArn-GAME_PUT}/invocations",
           "responses": {
             "default": {
-              "statusCode": "200"
+              "statusCode": "200",
+              "responseParameters":{
+                "method.response.header.Access-Control-Allow-Origin" : "'*'"
+              }
             }
           },
           "passthroughBehavior": "when_no_match",
@@ -118,6 +188,11 @@
         "responses": {
           "200": {
             "description": "Game found",
+            "headers": {
+              "Access-Control-Allow-Origin": {
+                  "type": "string"
+                }
+             },
             "schema": {
               "$ref": "#/definitions/Game"
             }
@@ -131,7 +206,10 @@
           "uri": "arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${LambdaArn-GAME_GET}/invocations",
           "responses": {
             "default": {
-              "statusCode": 200
+              "statusCode": 200,
+              "responseParameters":{
+                "method.response.header.Access-Control-Allow-Origin" : "'*'"
+              }
             }
           },
           "requestTemplates": {
@@ -144,6 +222,48 @@
       }
     },
     "/join/{GameId}": {
+      "options": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "CORS"
+        ],
+        "x-amazon-apigateway-integration": {
+          "type": "mock",
+          "passthroughBehavior" : "when_no_match",
+          "requestTemplates": {
+            "application/json": "{\n  \"statusCode\" : 200\n}\n"
+          },
+          "responses": {
+            "default": {
+              "statusCode": "200",
+              "responseTemplates": {
+                "application/json": "{}\n"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Default response for CORS method",
+            "headers": {
+              "Access-Control-Allow-Headers": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Methods": {
+                "type": "string"
+              },
+              "Access-Control-Allow-Origin": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
       "get": {
         "tags": [
           "Game"
@@ -165,6 +285,17 @@
         "responses": {
           "200": {
             "description": "Game found",
+            "headers": {
+              "Access-Control-Allow-Headers": {
+                  "type": "string"
+                },
+              "Access-Control-Allow-Methods": {
+                  "type": "string"
+                },
+              "Access-Control-Allow-Origin": {
+                  "type": "string"
+                }
+             },
             "schema": {
               "$ref": "#/definitions/Game"
             }
@@ -178,7 +309,10 @@
           "uri": "arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${LambdaArn-GAME_JOIN}/invocations",
           "responses": {
             "default": {
-              "statusCode": 200
+              "statusCode": 200,
+              "responseParameters":{
+                "method.response.header.Access-Control-Allow-Origin" : "'*'"
+              }
             }
           },
           "requestTemplates": {
