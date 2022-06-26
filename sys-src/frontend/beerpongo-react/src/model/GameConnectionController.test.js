@@ -40,7 +40,7 @@ describe('tryUpdatingGame', () => {
     it('updates a game state correctly', () => {
         //getting the current state of a game
         let currentState = GameConnectionController.tryGettingGame("5ux59QVQ");
-        expext(GameConnectionController.tryUpdatingGame("5ux59QVQ", "5:1")).toEqual(currentState + "5:1");
+        expect(GameConnectionController.tryUpdatingGame("5ux59QVQ", "5:1")).toEqual(currentState + "5:1");
     })
 })
     
