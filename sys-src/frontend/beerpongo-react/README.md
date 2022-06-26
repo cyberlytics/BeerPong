@@ -6,11 +6,11 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 You can build the docker image with:
 
-### `docker build -t beerpongo-webapp:latest .` (Don't forget the dot at the end)
+### `docker build --build-arg backend_url={backend-url} -t beerpongo-webapp:latest .` (Don't forget the dot at the end)
 
 and run your container on your local pc with:
 
-### `docker build --build-arg backend_url={backend-url} -t beerpongo-webapp:latest .` 
+### `docker run -d -p 80:80 beerpongo-webapp:latest`
 
 Now you can access the site over the localhost.
 
