@@ -50,7 +50,14 @@ def post(event, context):
         new_game = {"GameId": game_id, "State": "", "playerCount": 1}
         table.put_item(Item=new_game)
 
-        return {"statusCode": 200, "body": json.dumps(new_game)}
+        return {
+            "statusCode": 200,
+                        'headers': {
+                'Access-Control-Allow-Headers': 'Content-Type',
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'OPTIONS,POST,GET'
+            }, 
+            "body": json.dumps(new_game)}
     except Exception:
         logging.exception("Failed to put new game item")
         return {"statusCode": 500}
