@@ -127,26 +127,26 @@ class GamePage extends React.Component{
             // during one turn more than once -> we send an update-request after finishing the turn
             // We need to allow updates only for the correct side!
             // TODO: We need to get the real player-ID's here
-            "p1_0_OnClick": (this.newState.userId === 3 || this.newState.userId === 2) ? null : (this.newState.activePlayer === true ?  this.cupClicked.bind(this, 0) : null),
-            "p1_1_OnClick": (this.newState.userId === 3 || this.newState.userId === 2) ? null : (this.newState.activePlayer === true ?  this.cupClicked.bind(this,1) : null),
-            "p1_2_OnClick": (this.newState.userId === 3 || this.newState.userId === 2) ? null : (this.newState.activePlayer === true ?  this.cupClicked.bind(this,2) : null),
-            "p1_3_OnClick": (this.newState.userId === 3 || this.newState.userId === 2) ? null : (this.newState.activePlayer === true ?  this.cupClicked.bind(this,3) : null),
-            "p1_4_OnClick": (this.newState.userId === 3 || this.newState.userId === 2) ? null : (this.newState.activePlayer === true ?  this.cupClicked.bind(this,4) : null),
-            "p1_5_OnClick": (this.newState.userId === 3 || this.newState.userId === 2) ? null : (this.newState.activePlayer === true ?  this.cupClicked.bind(this,5) : null),
-            "p1_6_OnClick": (this.newState.userId === 3 || this.newState.userId === 2) ? null : (this.newState.activePlayer === true ?  this.cupClicked.bind(this,6) : null),
-            "p1_7_OnClick": (this.newState.userId === 3 || this.newState.userId === 2) ? null : (this.newState.activePlayer === true ?  this.cupClicked.bind(this,7) : null),
-            "p1_8_OnClick": (this.newState.userId === 3 || this.newState.userId === 2) ? null : (this.newState.activePlayer === true ?  this.cupClicked.bind(this,8) : null),
-            "p1_9_OnClick": (this.newState.userId === 3 || this.newState.userId === 2) ? null : (this.newState.activePlayer === true ?  this.cupClicked.bind(this,9) : null),
-            "p2_0_OnClick": (this.newState.userId === 3 || this.newState.userId === 1) ? null : (this.newState.activePlayer === true ?  this.cupClicked.bind(this,0) : null),
-            "p2_1_OnClick": (this.newState.userId === 3 || this.newState.userId === 1) ? null : (this.newState.activePlayer === true ?  this.cupClicked.bind(this,1) : null),
-            "p2_2_OnClick": (this.newState.userId === 3 || this.newState.userId === 1) ? null : (this.newState.activePlayer === true ?  this.cupClicked.bind(this,2) : null),
-            "p2_3_OnClick": (this.newState.userId === 3 || this.newState.userId === 1) ? null : (this.newState.activePlayer === true ?  this.cupClicked.bind(this,3) : null),
-            "p2_4_OnClick": (this.newState.userId === 3 || this.newState.userId === 1) ? null : (this.newState.activePlayer === true ?  this.cupClicked.bind(this,4) : null),
-            "p2_5_OnClick": (this.newState.userId === 3 || this.newState.userId === 1) ? null : (this.newState.activePlayer === true ?  this.cupClicked.bind(this,5) : null),
-            "p2_6_OnClick": (this.newState.userId === 3 || this.newState.userId === 1) ? null : (this.newState.activePlayer === true ?  this.cupClicked.bind(this,6) : null),
-            "p2_7_OnClick": (this.newState.userId === 3 || this.newState.userId === 1) ? null : (this.newState.activePlayer === true ?  this.cupClicked.bind(this,7) : null),
-            "p2_8_OnClick": (this.newState.userId === 3 || this.newState.userId === 1) ? null : (this.newState.activePlayer === true ?  this.cupClicked.bind(this,8) : null),
-            "p2_9_OnClick": (this.newState.userId === 3 || this.newState.userId === 1) ? null : (this.newState.activePlayer === true ?  this.cupClicked.bind(this, 9) : null)
+            "p1_0_OnClick": (this.newState.userId >= 3 || this.newState.userId === 2) ? null : (this.newState.activePlayer === true ?  this.cupClicked.bind(this, 0) : null),
+            "p1_1_OnClick": (this.newState.userId >= 3 || this.newState.userId === 2) ? null : (this.newState.activePlayer === true ?  this.cupClicked.bind(this,1) : null),
+            "p1_2_OnClick": (this.newState.userId >= 3 || this.newState.userId === 2) ? null : (this.newState.activePlayer === true ?  this.cupClicked.bind(this,2) : null),
+            "p1_3_OnClick": (this.newState.userId >= 3 || this.newState.userId === 2) ? null : (this.newState.activePlayer === true ?  this.cupClicked.bind(this,3) : null),
+            "p1_4_OnClick": (this.newState.userId >= 3 || this.newState.userId === 2) ? null : (this.newState.activePlayer === true ?  this.cupClicked.bind(this,4) : null),
+            "p1_5_OnClick": (this.newState.userId >= 3 || this.newState.userId === 2) ? null : (this.newState.activePlayer === true ?  this.cupClicked.bind(this,5) : null),
+            "p1_6_OnClick": (this.newState.userId >= 3 || this.newState.userId === 2) ? null : (this.newState.activePlayer === true ?  this.cupClicked.bind(this,6) : null),
+            "p1_7_OnClick": (this.newState.userId >= 3 || this.newState.userId === 2) ? null : (this.newState.activePlayer === true ?  this.cupClicked.bind(this,7) : null),
+            "p1_8_OnClick": (this.newState.userId >= 3 || this.newState.userId === 2) ? null : (this.newState.activePlayer === true ?  this.cupClicked.bind(this,8) : null),
+            "p1_9_OnClick": (this.newState.userId >= 3 || this.newState.userId === 2) ? null : (this.newState.activePlayer === true ?  this.cupClicked.bind(this,9) : null),
+            "p2_0_OnClick": (this.newState.userId >= 3 || this.newState.userId === 1) ? null : (this.newState.activePlayer === true ?  this.cupClicked.bind(this,0) : null),
+            "p2_1_OnClick": (this.newState.userId >= 3 || this.newState.userId === 1) ? null : (this.newState.activePlayer === true ?  this.cupClicked.bind(this,1) : null),
+            "p2_2_OnClick": (this.newState.userId >= 3 || this.newState.userId === 1) ? null : (this.newState.activePlayer === true ?  this.cupClicked.bind(this,2) : null),
+            "p2_3_OnClick": (this.newState.userId >= 3 || this.newState.userId === 1) ? null : (this.newState.activePlayer === true ?  this.cupClicked.bind(this,3) : null),
+            "p2_4_OnClick": (this.newState.userId >= 3 || this.newState.userId === 1) ? null : (this.newState.activePlayer === true ?  this.cupClicked.bind(this,4) : null),
+            "p2_5_OnClick": (this.newState.userId >= 3 || this.newState.userId === 1) ? null : (this.newState.activePlayer === true ?  this.cupClicked.bind(this,5) : null),
+            "p2_6_OnClick": (this.newState.userId >= 3 || this.newState.userId === 1) ? null : (this.newState.activePlayer === true ?  this.cupClicked.bind(this,6) : null),
+            "p2_7_OnClick": (this.newState.userId >= 3 || this.newState.userId === 1) ? null : (this.newState.activePlayer === true ?  this.cupClicked.bind(this,7) : null),
+            "p2_8_OnClick": (this.newState.userId >= 3 || this.newState.userId === 1) ? null : (this.newState.activePlayer === true ?  this.cupClicked.bind(this,8) : null),
+            "p2_9_OnClick": (this.newState.userId >= 3 || this.newState.userId === 1) ? null : (this.newState.activePlayer === true ?  this.cupClicked.bind(this, 9) : null)
         }
 
         // parse the game-string and set the className for the already hit cups to selected and remove the on-click
