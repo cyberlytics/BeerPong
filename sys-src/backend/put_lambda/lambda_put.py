@@ -22,8 +22,8 @@ def put(event, context):
     """
     table_name = os.environ['DB_TABLE']
 
-    id = event.get("GameId")
-    state = event.get("State")
+    id = event['id']
+    state = event['state']
 
     # Define access to db
     table = boto3.resource("dynamodb").Table(table_name)
