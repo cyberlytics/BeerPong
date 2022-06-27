@@ -5,19 +5,17 @@ import os
 
 def get(event, context):
     """
-    Provide an event, that contains the following keys:
+    Provide an event, that contains the following keys in 'params:path':
         - GameId
-        - State in the form '[ID]:[0-9, X],[ID]:[0-9, X],[ID]:[0-9, X],[ID]:[0-9, X],[ID]:[0-9, X]'
 
     Requires a role with reading access to DynamoDB.
 
     :param:  event: the lambda call event containing all given parameters
     :param:  context: the lambda call context
     :return response: JSON containing a statusCode and the body
-            with the gameID and the current state of the game
+            with the gameID, playerCount and the current state of the game
     """
     table_name = os.environ['DB_TABLE']
-
 
 
     # Defining access to database
