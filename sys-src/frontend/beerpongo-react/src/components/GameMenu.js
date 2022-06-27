@@ -1,11 +1,19 @@
 import {useContext} from "react";
-import { GameConnectionController } from "../model/GameConnectionController";
 import {UserContext} from "../context/UserContext";
-import {Link} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
+import tryCreatingGame, {tryJoiningGame} from "../model/GameConnectionController";
 
 //missing CSS
 function GameMenu() {
     const {userID, setUserID, gameID, setGameID} = useContext(UserContext);
+
+    let navigate = useNavigate();
+    let _gameId;
+    const joinGame = () =>{
+        let path = "game/" + _gameId;
+        navigate(path);
+    };
+
     return (
         <div>
             <div>
@@ -16,19 +24,29 @@ function GameMenu() {
                         setGameID(e.target.value);
                         }}>
                  </input>
-                <Link to={`game/${gameID}`}>
-                    <span onClick={() => {
-                        setUserID(GameConnectionController.tryJoiningGame(gameID))}}>
+                <button onClick={() => {
+                        tryJoiningGame(gameID).then((result)=>{
+                            console.log(result.body.playerid);
+                            setUserID(result.body.playerid);
+                            _gameId = gameID;
+                            joinGame();
+                        }); }}>
                     Join Game
-                    </span>
-                </Link>
-
+                </button>
             </div>
 
             <div>
                 <button
                     onClick={() => {
-                        GameConnectionController.tryCreatingGame()}}>
+                            tryCreatingGame().then((result)=>{
+                                let response = JSON.parse(result.body);
+                                _gameId = response['GameId'];
+                                setUserID(1);
+                                setGameID(_gameId);
+                                joinGame();
+                            });
+                        }
+                    }>
                     Create Game
                 </button>
             </div>
