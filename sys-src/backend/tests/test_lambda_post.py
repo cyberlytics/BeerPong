@@ -57,14 +57,15 @@ def test_post(dynamodb):
     assert response == {"statusCode": 200, "body": ANY}
 
     body = json.loads(response["body"])
-    assert len(body) == 2
+    assert len(body) == 3
     assert body["GameId"] == test_game_id
     assert body["State"] == ""
+    assert body["playerCount"] == 1
 
     # assert game item in dynamodb
     data = dynamodb.Table(table_name).scan()
     assert data['Count'] == 1
-    assert data['Items'][0] == {'GameId': test_game_id, 'State': ''}
+    assert data['Items'][0] == {'GameId': test_game_id, 'State': '', "playerCount": 1}
 
 
 @mock_dynamodb

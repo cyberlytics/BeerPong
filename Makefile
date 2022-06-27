@@ -9,7 +9,7 @@ install: install-infrastructure install-backend install-frontend
 
 test: test-infrastructure test-backend test-frontend
 
-test-coverage: test-coverage-infrastructure test-coverage-backend test-coverage-infrastructure
+test-coverage: test-coverage-infrastructure test-coverage-backend test-coverage-frontend
 
 formatting-checks: formatting-checks-infrastructure formatting-checks-backend
 

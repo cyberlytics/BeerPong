@@ -51,8 +51,8 @@ def test_put_lambda(aws_credentials):
 
     # event where GameId is 1 and player 1 hit cup 6
     event = {
-        "GameId": "1",
-        "State": p1_state,
+        "id": "1",
+        "state": p1_state,
     }
     response = put(event, {})
     assert response == {'statusCode': 200, 'body': '{"message": "Game State of Game 1 updated"}'}
@@ -69,6 +69,6 @@ def test_put_lambda(aws_credentials):
     assert data["Item"]["State"]["S"] == startstate + "," + p1_state
 
     # ----check with invalid id-----
-    event["GameId"] = 2
+    event["id"] = 2
     response = put(event, {})
     assert response == {'statusCode': 400, 'exception': "Game not found"}

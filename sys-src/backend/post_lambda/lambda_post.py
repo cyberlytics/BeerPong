@@ -34,7 +34,7 @@ def post(event, context):
     
     # set game id if present, else generate one
     if "GameId" in event:
-        game_id = event['params']['path']['GameId']
+        game_id = event['GameId']
 
     else:
         game_id = generate_game_id()
