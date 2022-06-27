@@ -200,3 +200,26 @@ Nächste Schritte:
 
 - Fertigstellung der geplanten Features
 - Zukünftiges hosten des Docker-Containers in AWS ECS
+
+
+# Schwierigkeiten
+
+* ## Policies: 
+* API Gateway muss auf Lambda zugreifen können
+* Lambdas müssen auf DynamoDB zugreifen dürfen
+* Schwierigkeit: Alle nötigen Policies rausfinden. Es fehlt immer eine 
+
+* ## CDK Policies definieren
+* Anlegen und zuweisen von Policies per cdk
+* Kein UI wie in Konsole
+
+* ## Online-Ressourcen auf JavaScript ausgelegt
+* Da unsere Wahl auf Python fiel, mussten wir Codebeispiele auf Python ummünzen.
+* Hier ist oft nicht nur die Syntax anders, sondern auch Methoden oder Methodensignaturen der AWS Bibliotheken
+
+* ## CORS
+* Beim ersten vollständigen Deploy musste das Frontend und das API-Gateway angepasst werden, um die CORS-Richtlinien für das jeweilige Teilsystem zu definieren.
+
+* ## Unterschiedliche Events je nach Request
+* Frägt man per get-request an werden die nötigen Informationen für die Lambdas in ein "params" gepackt. Hier mussten die Lambdas mit Request-Typ: get angepasst werden, um das event richtig auszulesen. 
+
