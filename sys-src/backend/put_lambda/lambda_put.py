@@ -73,7 +73,7 @@ def put(event, context):
     # if all went well
     response = {
         'statusCode': 200,
-        'body': json.dumps({"message": "Game State of Game {id} updated"})
+        'body': json.dumps({"message": f"Game State of Game {id} updated"})
     }
 
     return response
