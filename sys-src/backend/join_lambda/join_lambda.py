@@ -8,7 +8,11 @@ def join_handler(event, context):
     sends the incremented ID back to the player.
     Requires a role with read/write access to DynamoDB.
 
-    :param:  table: the dynamodb table name with default value "gamesTable"
+     Provide an event, that contains the following keys in 'params:path':
+        - GameId
+  
+    :param:  event: the lambda call event containing all given parameters
+    :param:  context: the lambda call context
     :return: response: JSON with http Status Code
             200	Incremete playerID ok
             500 Error receiving id
