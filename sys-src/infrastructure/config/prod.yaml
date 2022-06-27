@@ -16,15 +16,20 @@ Lambda:
     lambda_post:
       name: "lambdaProd_post"
       code: "./../backend/post_lambda"
-      handler: "post"
+      handler: "lambda_post.post"
       runtime: "python3.9"
     lambda_get:
       name: "lambdaProd_get"
       code: "./../backend/get_lambda"
-      handler: "lambda_get_dev"
+      handler: "lambda_get.get"
       runtime: "python3.9"
     lambda_put:
       name: "lambdaProd_put"
       code: "./../backend/put_lambda"
-      handler: "put"
+      handler: "lambda_put.put"
+      runtime: "python3.9"
+    lambda_join:
+      name: "lambdaProd_join"
+      code: "./../backend/join_lambda"
+      handler: "join_lambda.join_handler"
       runtime: "python3.9"
