@@ -7,9 +7,8 @@ import os
 def put(event, context):
     """
     Provide an event, that contains the following keys:
-        - GameId
-        - State in the form '[ID]:[0-9, X]'
-        - optional: table referring to the table name to update
+        - id: GameId composed of 8 characters
+        - state in the form '[ID]:[0-9, X]'
     
     Requires a role with read/write access to DynamoDB.
 
@@ -34,16 +33,6 @@ def put(event, context):
             "GameId": id
         }
     )
-
-    # The Table resource's response looks like this:
-    #  {
-    #    "GameId": {
-    #        "S": "exampleid"
-    #    },
-    #    "State": {
-    #        "S": "[ID]:[0-9, X],[ID]:[0-9, X],[ID]:[0-9, X],[ID]:[0-9, X],[ID]:[0-9, X]"
-    #    }
-    #  }
 
     try:
         item = data['Item']
