@@ -4,11 +4,11 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-aws-cdk-lib = "==2.24.1"
-constructs = "<11.0.0,>=10.0.0"
-pyyaml = "*"
+boto3 = "*"
+moto = "*"
 
 [dev-packages]
+moto = "*"
 flake8 = "*"
 black = "*"
 isort = "*"
@@ -16,4 +16,4 @@ pytest = "*"
 pytest-cov = "*"
 
 [requires]
-python_version = "3.10"
+python_version = "3.9"

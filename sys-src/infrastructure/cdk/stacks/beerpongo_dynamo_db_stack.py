@@ -1,5 +1,6 @@
 from aws_cdk import Stack
 from aws_cdk import aws_dynamodb as dynamodb
+from aws_cdk import RemovalPolicy
 from constructs import Construct
 
 
@@ -18,6 +19,7 @@ class BeerpongoDynamoDbStack(Stack):
             id=games_table_config["id"],
             table_name=games_table_config["tableName"],
             billing_mode=dynamodb.BillingMode.PAY_PER_REQUEST,
+            removal_policy=RemovalPolicy.DESTROY,
             partition_key=dynamodb.Attribute(
                 name="GameId", type=dynamodb.AttributeType.STRING
             ),
