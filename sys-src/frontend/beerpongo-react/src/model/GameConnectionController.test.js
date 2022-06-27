@@ -1,7 +1,9 @@
 import { GameConnectionController } from "./GameConnectionController";
 //import Jest from 'jest'
 
+/*
 it('first test', () => {
+    // genial
     expect(1+1).toEqual(2);
 })
 
@@ -43,4 +45,5 @@ describe('tryUpdatingGame', () => {
         expect(GameConnectionController.tryUpdatingGame("5ux59QVQ", "5:1")).toEqual(currentState + "5:1");
     })
 })
+*/
     
