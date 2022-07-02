@@ -1,49 +1,141 @@
-import { GameConnectionController } from "./GameConnectionController";
-//import Jest from 'jest'
+import axios from 'axios'
+import tryCreatingGame, {tryUpdatingGame, tryGettingGame, tryJoiningGame} from "./GameConnectionController";
 
-/*
-it('first test', () => {
-    // genial
-    expect(1+1).toEqual(2);
-})
+jest.mock('axios');
+
 
 describe('tryGettingGame', () => {
-    it('right state', () => {
-        expect(GameConnectionController.tryGettingGame("12345678")).toEqual("5:08,3:12,5:08,3:12");
-    })
+    it('should return correct data', () => {
+        let mockedResponse =  {
+            config: {
+                timeout: 0, 
+                xsrfCookieName: "XSFR-TOKEN"
+            },
+            data:{
+                "statusCode": "200",
+                "body": {
+                    "GameId": "1234ABC",
+                    "State": "1:X",
+                    "playerCount": 1
+                },
+            },      
+            headers:{
+                "content-length":"64",
+                "content-type":"application/json"
 
-    it('Error, if Game does not exist', () => {
-        expect(GameConnectionController.tryGettingGame("a")).toThrowError(new Error("Get joining game failed"));
+            },
+            status:200,
+            statusText:"OK"
+        };
+        axios.get = jest.fn().mockResolvedValue(mockedResponse);
+
+        tryGettingGame("1234ABC").then(response => {
+            expect(response).toEqual(mockedResponse.data);
+        })
+        
     })
+    /*
+    it('Error, if getting game fails', () => {
+        const message = "Get joining game failed"
+        
+        axios.get = jest.fn().mockRejectedValue(message)
+
+        tryGettingGame("ABCD56").then(response => {
+            expect(response).toThrow();
+        })
+        //expect(() => tryGettingGame("1")).toThrow(message);
+        
+    })*/
 })
 
+/
 describe('tryJoiningGame', () => {
-    it('right state', () => {
-        expect(GameConnectionController.tryJoiningGame("12345678")).toEqual("5:08,3:12,5:08,3:12");
-    })
+    it('should return correct data', () => {
+        let mockedResponse =  {
+            config: {
+                timeout: 0, 
+                xsrfCookieName: "XSFR-TOKEN"
+            },
+            data:{
+                "statusCode": "200",
+                "body": {
+                    "id": "1234ABC",
+                    "playerid": 2
+                },
+            },      
+            headers:{
+                "content-length":"64",
+                "content-type":"application/json"
 
-    it('Error, if Game does not exist', () =>{
-        expect(GameConnectionController.tryJoiningGame("a")).toThrowError(new Error("Trying to join game with Id: 12345678 failed!"))
+            },
+            status:200,
+            statusText:"OK"
+        };
+
+        axios.get = jest.fn().mockResolvedValue(mockedResponse);
+
+        tryJoiningGame("1234ABC").then(response => {
+            expect(response).toEqual(mockedResponse.data);
+        })
     })
 })
 
 describe('tryCreatingGame', () => {
-    it('runs correctly', () => {
-        let resp = {
-        "statusCode": 200
-      }
-        expect(GameConnectionController.tryCreatingGame()).toEqual(resp);
-    })
+    it('should return correct data', () => {
+        let mockedResponse =  {
+            config: {
+                timeout: 0, 
+                xsrfCookieName: "XSFR-TOKEN"
+            },
+            data:{
+                "statusCode": "200",
+                "body": {
+                    "id": "9876YZ",
+                    "playerid": 1
+                },
+            },      
+            headers:{
+                "content-length":"64",
+                "content-type":"application/json"
 
-    //TODO: test error 
+            },
+            status:200,
+            statusText:"OK"
+        };
+
+        axios.post = jest.fn().mockResolvedValue(mockedResponse);
+
+        tryCreatingGame().then(response => {
+            expect(response).toEqual(mockedResponse.data);
+        })
+    })
 })
 
 describe('tryUpdatingGame', () => {
-    it('updates a game state correctly', () => {
-        //getting the current state of a game
-        let currentState = GameConnectionController.tryGettingGame("5ux59QVQ");
-        expect(GameConnectionController.tryUpdatingGame("5ux59QVQ", "5:1")).toEqual(currentState + "5:1");
+    it('should return correct data', () => {
+        let mockedResponse =  {
+            config: {
+                timeout: 0, 
+                xsrfCookieName: "XSFR-TOKEN"
+            },
+            data:{
+                "statusCode": "200",
+                "body": "{message: Game State of Game 9876YZ updated}"
+            },      
+            headers:{
+                "content-length":"64",
+                "content-type":"application/json"
+            },
+            status:200,
+            statusText:"OK"
+        };
+
+        axios.put = jest.fn().mockResolvedValue(mockedResponse);
+
+        tryUpdatingGame("9876YZ", "1:31").then(response => {
+            expect(response).toEqual(mockedResponse.data);
+        })
     })
 })
-*/
+
     
