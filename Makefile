@@ -73,10 +73,10 @@ install-frontend:
 	cd sys-src/frontend/beerpongo-react && npm install
 
 test-frontend: install-frontend
-	cd sys-src/frontend/beerpongo-react && npm run test
+	cd sys-src/frontend/beerpongo-react && npm run test -- --watchAll=false
 
 test-coverage-frontend: install-frontend
-	cd sys-src/frontend/beerpongo-react && npm run test -- --coverage
+	cd sys-src/frontend/beerpongo-react && npm run test -- --coverage --watchAll=false
 
 start-frontend: install-frontend
 	cd sys-src/frontend/beerpongo-react && npm run start
